@@ -18,3 +18,13 @@ Integrator **self-review**, no code or schema change; available GitHub/Render re
 
 ## Next working step
 In the Render dashboards, privately set web `DATABASE_URL` using its Postgres internal URL. On a trusted local CLI using the permitted external connection/TLS, run `npm ci`, `npm run db:migrate`, then `npm run db:seed` once only against the empty demo DB (outside NODE_ENV=production), verifying 36 rows/six notes. Then reverify deployment, test all required flows externally at desktop/375px, check persistence after restart, and only after actual success review release PR #1, README, checklist and author's hours before 11:00 IST.
+
+## Release owner update — 23 October 2026
+
+Full exact merged integration CI [39844358279](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279) **SUCCESS** on `56fa9cfb1eac0734800f3e95338a04fda14e5ad1`: lint, typecheck, build, 106 unit/client, PostgreSQL16 migrations/repeat-safe synthetic seed/23 assertions, 57 HTTP and 12 browser cases. Render deployment `dep-dbd6jfrl550s73arv5lg` reports LIVE on application commit `d01f7e5`; the later `56fa9cf` commit changed documentation only. GitHub repository remains public, and PR #1 remains draft.
+
+User reports having pasted Render `DATABASE_URL`, but the connector does not expose the stored setting. It is **not confirmed** that the connection works. Hosted migration, seed, API/browser flow and restart persistence remain **NOT VERIFIED**. A private read-only SQL attempt was blocked by Render's restricted external IP allowlist, which was not relaxed. The public onrender hostname also could not be fetched from this execution environment. No database credential was disclosed and no production data was touched.
+
+Scoped release security review in [SECURITY_RELEASE_REVIEW.md](../SECURITY_RELEASE_REVIEW.md): source/API/database guardrails inspected, public unauthenticated routes documented as **synthetic trusted-agent-demo-only**, and repository file inventory checked for excluded environment/private-key files. This is a static targeted review, not a complete penetration test, GitHub code-scanning clearance or demonstration of live app security.
+
+**Release verdict remains BLOCKED** on (1) owner-controlled one-time external CLI migration + seed, (2) external public smoke / 375px check / restart persistence, (3) GitHub description/homepage and final README hours, (4) final main PR merge and submission. User acknowledgment PENDING. Do not infer release completion from a deployed process or isolated CI.

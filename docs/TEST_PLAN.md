@@ -1,6 +1,6 @@
 # Verification plan
 
-Status: 106 domain/client unit tests passed locally; initial real-HTTP suite executed (17 passed, 40 failed due transition enum inference); correction awaits CI. Twelve browser scenarios were not reached. Independent expected results come from REQUIREMENTS.md and assignment rules, never from the implementation policy under test.
+Status 23 October 2026: **PASS on isolated PostgreSQL16 CI** ([run 39844358279](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279), integration SHA `56fa9cf`): 106 domain/client, 23 PostgreSQL invariant assertions, 57 HTTP and 12 desktop/375px Playwright cases. Earlier 17/40 HTTP failure was corrected with enum casts and rerun; earlier browser selector failure was corrected. **Hosted external restart/persistence and public end-to-end flows remain NOT RUN.** Independent expected results come from REQUIREMENTS.md and assignment rules, never from the implementation policy under test.
 Use Vitest plus real isolated PostgreSQL, direct HTTP Route Handler tests and Playwright. Do not use mock DB success as constraint evidence.
 
 ## Required cases
@@ -21,4 +21,4 @@ Use Vitest plus real isolated PostgreSQL, direct HTTP Route Handler tests and Pl
 For each executed check record requirement ID, exact candidate, command, isolated environment, expected/actual, exit code, artifact/log reference and limitations. Avoid customer data/secrets in logs.
 After each slice retest affected earlier paths; full release suite at CP-006. Use role/label locators and web-first assertions [R-006 in RESEARCH_LOG.md].
 Add a bounded exploratory browser pass beyond scripted happy paths; separate automation failure from product failure. Runtime traces support correctness; coverage percentage alone does not.
-Pre-push: applicable tests/build/type checks and exact diff review. Later CI repeats gates on the pushed SHA. No CI workflow currently exists. If a gate cannot run, record BLOCKED/NOT RUN and do not claim successful checkpoint.
+Pre-push: applicable tests/build/type checks and exact diff review. Later CI repeats gates on the pushed SHA. The reviewed `.github/workflows/verify.yml` runs against an isolated PostgreSQL16 service on GitHub Actions. Its latest [successful exact-head outcome](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279) does not verify Render-hosted data. If a gate cannot run, record BLOCKED/NOT RUN rather than accepting it.

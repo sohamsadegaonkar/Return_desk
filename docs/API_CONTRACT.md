@@ -1,6 +1,6 @@
 # API contract summary
 
-Canonical details: [architecture](architecture.md), sections 4, 6 and 9. Route Handlers and transactional service implemented; initial real PostgreSQL-backed HTTP execution found a transition-parameter typing defect; reviewed correction awaits a new CI result.
+Canonical details: [architecture](architecture.md), sections 4, 6 and 9. Route Handlers and transactional service implemented. The earlier PostgreSQL status-enum parameter defect was corrected; all **57 isolated real-HTTP tests passed** on the exact `56fa9cf` integration head ([CI](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279)). **The public Render API and hosted database are not yet verified.**
 | Route | Success |
 |---|---|
 | GET /api/requests | 200 data array + pagination |
