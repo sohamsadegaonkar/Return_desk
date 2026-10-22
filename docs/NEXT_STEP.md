@@ -4,7 +4,7 @@
 CP-000 supplies a reviewed architecture, requirement map, test expectations and research/review protocol. It does NOT supply executable software. Use those contracts to build the minimum runnable foundation.
 
 ## Entry gate
-Read CP-000 and confirm its remote publication and review evidence. Record its exact enclosing commit as predecessor. Explicit user acknowledgment remains separately tracked; do not claim it occurred.
+Read CP-000: documentation candidate e58e55f6c939a21d721a405e6fcf94372b20a19c was reviewed and remotely verified; use the current receipt commit as the final predecessor. Record its exact enclosing commit as predecessor. Explicit user acknowledgment remains separately tracked; do not claim it occurred.
 Check available Node/package-manager/PostgreSQL versions and remaining assignment deadline from actual evidence.
 
 ## Fresh research before implementation

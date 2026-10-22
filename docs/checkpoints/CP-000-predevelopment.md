@@ -16,7 +16,7 @@ Runtime tests/build/migrations: NOT RUN, N/A to docs-only change. Application re
 Pre-publication check: 30 relative Markdown links resolved successfully across the 20 changed files and existing architecture. Final content self-review: PASS for this docs-only scope. No application functionality was tested. This checkpoint's enclosing commit identifies its candidate; it cannot contain its own future SHA.
 
 ## Publication
-At content preparation: NOT YET PUSHED. A subsequent reviewed publication receipt records the exact pushed commit and verification; do not interpret this preparation timestamp as an ongoing failure.
+Published documentation candidate: e58e55f6c939a21d721a405e6fcf94372b20a19c, tree 123808f74f1c05464d313f7fde1ecf933d85d2ee. Remote refs/heads/main was read back and matched that commit. Pre-publication review and 30-link check passed. CI is not configured; no runtime test success is claimed.\n\nThis receipt is a separate documentation-only amendment: self-reviewed against the returned commit/ref evidence before publication. It changes reporting only; no application or policy changes. Its enclosing Git commit is the receipt revision.
 User acknowledgment of completed pack: PENDING.
 
 ## Next step
