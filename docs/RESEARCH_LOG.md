@@ -25,3 +25,9 @@ Selected version-specific PostgreSQL 16 documentation rather than blindly adopti
 
 ## Next research question
 CP-001: verify actual Next.js/Node/Drizzle compatibility, generated-column migration support and interactive PostgreSQL transactions on the selected deployment driver. Record exact pinned versions and official source sections. Current docs-only evidence does not settle these implementation details.
+
+## R-009 — Foundation implementation recheck (2026-10-22)
+Primary sources freshly retrieved: https://nextjs.org/docs/app/getting-started/installation (Quick start, system requirements and CLI defaults); https://arxiv.org/html/2605.17242v1 (abstract rechecked; methodology previously recorded in R-001).
+Decision: use create-next-app scaffold with App Router, TypeScript and Tailwind; preserve repository instructions rather than replace them with generated AGENTS.md. Pin actual installed package versions and lockfile. Installed Next 16.4.2 and React 19.3.0; Node 24.19.0 satisfies documented minimum 20.9. Removed remote Google font dependency from layout to keep the build independent of font fetching.
+Research implication: build success is only a foundation check, not evidence that business workflows pass acceptance tests. No paper performance figures are generalized to this project. Skills alone were not the evidence source. Generated cache defaults remain scaffold-only; review before adding dynamic request reads.
+Caveat: npm warned that installed scaffold ESLint 9.39.5 is out of support. Lint passed; dependency support review remains open before release.

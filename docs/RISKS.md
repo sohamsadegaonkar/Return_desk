@@ -2,7 +2,7 @@
 
 | Risk | Current state | Response |
 |---|---|---|
-| Actual assignment deadline unknown here | Unconfirmed | Use email deadline; planning does not restart 24 hours |
+| Deadline 23 October 2026, 11:00 AM IST | User confirmed | Target 10:00 AM feature freeze; prioritize mandatory gates |
 | No runnable app yet | Known | Begin foundation after reviewed docs |
 | Runtime/package/hosting compatibility | Unverified | CP-001 fresh official-source check and real build/connection test |
 | Deployment credentials/account access | Unverified | Identify blocker without committing secrets; continue local authorized work |

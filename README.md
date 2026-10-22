@@ -4,7 +4,7 @@ A guided returns workspace for a small online store.
 
 ## Current state
 
-Pre-development architecture and governance documentation are prepared. No runnable application, executed migration, application test result or deployed URL exists yet.
+Architecture, governance and the Next.js foundation are present. Clean install, lint, typecheck and production build passed. This is a foundation preview: request workflows, PostgreSQL migration and deployment are not implemented.
 
 ## Start here
 
@@ -27,3 +27,16 @@ Searchable queue → request workspace → guided decision → reliable feedback
 ## Implementation order
 
 Foundation → Create & Find → Lifecycle → Record maintenance → Responsive UI/recovery → Release rehearsal. Setup commands, environment variables, live URL and actual hours will be documented as they become real. Never use this README as evidence that planned features already work.
+
+## Run the foundation
+
+Requires Node.js >=20.9 (verified with 24.19.0) and npm (verified with 11.9.0).
+
+```sh
+npm ci
+npm run dev
+```
+
+Verification: `npm run lint`, `npm run typecheck`, `npm run build`.
+Production start: `npm start`. No environment variables are required for this preview.
+No customer records can be created yet. See docs/checkpoints/CP-001-foundation.md for limitations.

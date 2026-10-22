@@ -21,3 +21,9 @@ Recheck current Next.js App Router installation/Node runtime and caching guidanc
 ## Exit evidence
 Actual commands and results for install/build, empty-database migration and relevant constraints; no secrets; review of exact diff; updated CP-001, STATUS, NEXT_STEP and research log. Do not invent scripts before package.json exists.
 Next after success: CP-002 uses the verified schema/connection/contracts to implement create and combined list queries. No app runtime gate may be marked successful from source inspection alone.
+
+## Confirmed deadline and execution mode
+Submit by 23 October 2026 at 11:00 AM IST, as stated by the user. Internal freeze target is 10:00 AM IST. Four assigned agents stopped due to usage limits without commits in assigned worktrees; see TEAM_PLAN.md. The integrator may continue authorized work sequentially. Do not claim four active engineers until they actually resume.
+
+## Continuation after the scaffold
+The reviewed scaffold in CP-001 now supplies the executable Next.js toolchain. Next implement the pure domain contract and independent truth-table tests, then the PostgreSQL schema and migration; verify against a real isolated PostgreSQL instance. CP-001 remains incomplete until its database/runtime gates pass. Re-establish agent capacity before assigning parallel ownership. Read the current partial checkpoint before editing.
