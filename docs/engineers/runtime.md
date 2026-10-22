@@ -37,3 +37,17 @@ Self-review checked transaction finally/rollback, pool release, controlled diagn
 ## Next dependent step
 
 Integrator reviews this exact commit, adds the check to isolated PostgreSQL 16 CI after committed migration, observes results, and fixes any actual failures. Execute migration twice, seed once (36 visible + 6 notes), second seed refusal preserving counts, direct script, and QA's independent HTTP/browser suite. Update shared checkpoint, STATUS, NEXT_STEP and RESEARCH_LOG with actual CI evidence before claiming the foundation/runtime gate passed. User acknowledgment remains separate and pending.
+
+## Independent API/service review amendment
+
+Parent requested a separate read-only correctness review while the API, UI and QA engineers worked concurrently. Inspected API service/routes/DTO/errors/HTTP helpers from API engineer commit 813287b, then verified follow-up 9729518. No API files were edited by this reviewer.
+
+Found a concrete chronological ordering defect: the notes query selected `id::text AS id` then sorted with bare `id ASC`. PostgreSQL resolves a simple ORDER BY name matching both input and output to the output alias; note identity therefore sorted as text for equal timestamps (10 before 2). Sent the finding promptly to integrator, API owner and independent QA. API owner fixed the query in 9729518 to `ORDER BY request_notes.created_at ASC, request_notes.id ASC`; inspected the qualified base-column fix. QA was asked to exercise at least ten identical-timestamp note IDs across a digit boundary. This is a static fix verification, not a PostgreSQL runtime pass.
+
+No other concrete blocker identified in reviewed database interactions. Write transactions use READ COMMITTED with visible-parent FOR UPDATE: PostgreSQL rechecks the WHERE predicate after a wait, returns the updated locked row, then service checks version/eligibility. Notes lock the same parent without incrementing version. List/detail read-only REPEATABLE READ transactions keep count/page and request/notes consistent per snapshot. Named partial unique violations are mapped after rollback, rather than querying in an aborted transaction. Filter values are bound; SQL sort identifiers/direction come from fixed allowlists. Money/BIGINT select casts preserve string transport.
+
+Enum parameter reuse in the status UPDATE and CASE predicates remains an explicit PostgreSQL runtime verification focus. The assignment target should infer the enum type; without executing PostgreSQL, no failure or success is claimed. Requested explicit casts as an optional clarity measure, not an evidence-backed defect.
+
+Fresh sources for this review: https://www.postgresql.org/docs/16/queries-order.html (output-label precedence and tie sorting), https://www.postgresql.org/docs/16/transaction-iso.html (READ COMMITTED wait/re-evaluation and REPEATABLE READ snapshots). Reviewed service SHA-256 after note fix: dd3e560cb90ce94a06fcee57937d8194c0d0540cdf0869143c3f9176776df854. HTTP helper: 809a36d03db0798219f884a7d8fabc26ae9b89793e93e3ab00cb726dba660856. Error helper: d9088af778bc41aa7b60d8f0896794c07bd957f740fe28039d7966fe57d39c03.
+
+Amendment self-reviewed for exact inspected version, source support and runtime limitations; whitespace check passed. Integrator must record independent finding/fix and eventual CI evidence in the shared checkpoint. No user acknowledgment inferred, no remote push performed by this reviewer.
