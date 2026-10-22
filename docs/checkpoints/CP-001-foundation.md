@@ -19,3 +19,6 @@ Publication: enclosing commit is the reviewed candidate; verify remote after pus
 
 ## Next step
 Continue CP-001 with pure domain schemas/policy and independent tests, then real PostgreSQL migration/connectivity. Fresh primary-source check required for those decisions. CP-002 depends on those gates; scaffold success alone does not open it.
+
+## Parallel execution update
+Following the user's correction, all four agents resumed concurrently and each confirmed execution available. Agent inventory showed all four RUNNING. Work remains incomplete until deliverables are integrated and gates executed. This update was self-reviewed against those tool responses; it does not erase the earlier usage-limit interruption or claim independent review has occurred.

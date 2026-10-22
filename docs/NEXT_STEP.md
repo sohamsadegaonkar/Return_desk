@@ -27,3 +27,6 @@ Submit by 23 October 2026 at 11:00 AM IST, as stated by the user. Internal freez
 
 ## Continuation after the scaffold
 The reviewed scaffold in CP-001 now supplies the executable Next.js toolchain. Next implement the pure domain contract and independent truth-table tests, then the PostgreSQL schema and migration; verify against a real isolated PostgreSQL instance. CP-001 remains incomplete until its database/runtime gates pass. Re-establish agent capacity before assigning parallel ownership. Read the current partial checkpoint before editing.
+
+## Active parallel continuation
+All four engineers have resumed concurrently with isolated write ownership (see TEAM_PLAN). Domain builds schemas/policy; database builds persistence/migration/seed; frontend owns manifests and build; verification writes independent tests. Integrator reviews exact commits and combines them serially. Do not describe unintegrated agent output as a passing checkpoint.

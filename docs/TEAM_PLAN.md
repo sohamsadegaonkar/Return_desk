@@ -3,7 +3,7 @@
 User-confirmed deadline: **23 October 2026, 11:00 AM Asia/Kolkata (05:30 UTC)**.
 Internal release-freeze target: 10:00 AM IST. This is a target, not a guarantee of completion or unattended overnight execution.
 
-## Assigned ownership (agents currently stopped by usage limit)
+## Assigned ownership (four agents resumed concurrently)
 
 | Engineer | Isolated branch | Exclusive write scope |
 |---|---|---|
@@ -40,3 +40,6 @@ All four agents reported a usage-limit error without commits or changes in their
 
 ## Temporary handoff
 The integrator takes frontend/build ownership while agents are stopped. An existing create-next-app scaffold was found outside the worktrees; its files were inspected and selectively adapted, preserving repository governance. No independent agent review is claimed.
+
+## Parallel execution resumed
+The user clarified that sequential substitution did not satisfy the request. All four existing agents were resumed together; each reported execution available and the agent inventory confirmed all four RUNNING. Their isolated worktree ownership above remains in force. Frontend alone fast-forwards the reviewed scaffold fb9bdb6 before changing dependencies; other engineers retain the initial baseline and deliver disjoint owned commits. Integrator takes back shared-document/integration duties only. These are actual starts, not completed deliverables or independent review claims. Previous usage-limit interruption remains historical evidence. Agents are working during this active session; this does not promise unattended future execution.
