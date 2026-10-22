@@ -151,10 +151,10 @@ export class RequestService {
       const semantic = validateTransitionDetails(parsed.data);
       if (!semantic.success) throw validationError(semantic.error);
       const d = semantic.data;
-      const result = await client.query<RequestRow>(`UPDATE return_requests SET status=$2,
+      const result = await client.query<RequestRow>(`UPDATE return_requests SET status=$2::return_status,
         resolution=$3, refund_amount=$4, version=version+1, updated_at=clock_timestamp(),
-        decided_at=CASE WHEN $2 IN ('APPROVED','REJECTED') THEN clock_timestamp() ELSE decided_at END,
-        completed_at=CASE WHEN $2='COMPLETED' THEN clock_timestamp() ELSE completed_at END
+        decided_at=CASE WHEN $2::return_status IN ('APPROVED','REJECTED') THEN clock_timestamp() ELSE decided_at END,
+        completed_at=CASE WHEN $2::return_status='COMPLETED' THEN clock_timestamp() ELSE completed_at END
         WHERE id=$1 RETURNING ${columns}`,
       [id, d.toStatus, d.toStatus === "APPROVED" ? d.resolution : row.resolution,
         d.toStatus === "APPROVED" ? d.refundAmount ?? null : row.refundAmount]);
