@@ -46,7 +46,7 @@ test("queue searches a real record and fits the viewport", async ({ page, reques
   await noHorizontalOverflow(page);
 });
 
-test("create form persists customer and order details", async ({ page }) => {
+test("create form persists customer and order details", async ({ page }, testInfo) => {
   const token = randomUUID();
   await page.goto("/requests/new");
   await page.getByLabel("Customer name", {exact: true}).fill(`Browser customer ${token}`);
@@ -57,6 +57,7 @@ test("create form persists customer and order details", async ({ page }) => {
   await page.getByLabel("Quantity", {exact: true}).fill("2");
   await page.getByLabel("Reason for return", {exact: true}).selectOption("SIZE_ISSUE");
   await noHorizontalOverflow(page);
+  await page.screenshot({path: `test-results/create-${testInfo.project.name}.png`,fullPage:true});
   await page.getByRole("button", {name: "Create request"}).click();
   await expect(page).toHaveURL(/\/requests\/[0-9a-f-]{36}$/);
   await expect(page.getByText(`FORM-${token}`, {exact: true})).toBeVisible();
@@ -65,11 +66,13 @@ test("create form persists customer and order details", async ({ page }) => {
   await noHorizontalOverflow(page);
 });
 
-test("approval fields clear on resolution changes and only legal actions remain", async ({page, request}) => {
+test("approval fields clear on resolution changes and only legal actions remain", async ({page, request}, testInfo) => {
   const row = await create(request);
   const reviewed = await request.post(`/api/requests/${row.id}/transitions`, {data: {expectedVersion: row.version, toStatus: "IN_REVIEW"}});
   expect(reviewed.status()).toBe(200);
   await page.goto(`/requests/${row.id}`);
+  await expect(page.getByRole("heading",{name:row.reference,exact:true})).toBeVisible();
+  await page.screenshot({path:`test-results/detail-${testInfo.project.name}.png`,fullPage:true});
   await expect(page.getByRole("button", {name: "Start review", exact: true})).toHaveCount(0);
   await page.getByRole("button", {name: "Approve request", exact: true}).click();
   const dialog = page.getByRole("dialog");

@@ -1113,7 +1113,7 @@ h1 {
 .input[aria-invalid="true"] { border-color: #c74e49; }
 .filter-input { background: white; font-size: 13px; color: #32445f; }
 .search-wrap { position: relative; }
-.search-glyph { position: absolute; top: 42px; left: 13px; font-size: 23px; color: #617da5; line-height: 24px; pointer-events: none; }
+.search-glyph { position: absolute; top: 38px; left: 13px; width: 19px; height: 19px; color: #617da5; pointer-events: none; }
 .search-input { padding-left: 43px; padding-right: 43px; }
 .search-clear {
   position: absolute; right: 5px; bottom: 4px;
@@ -1326,7 +1326,7 @@ h1 {
   .filter-label { font-size: 11px; margin-bottom: 6px; }
   .input { font-size: 16px; min-height: 48px; }
   .filter-input { font-size: 14px; }
-  .search-glyph { top: 39px; }
+  .search-glyph { top: 37px; }
   .filter-summary { padding: 0 18px 16px; }
   .request-card { padding: 17px; margin-bottom: 10px; }
   .pagination { padding: 18px; justify-content: space-between; }

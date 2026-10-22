@@ -130,7 +130,7 @@ function QueueState({ query }: { query: string }) {
         </div>
         <div className="queue-filters">
           <div className="search-wrap">
-            <span aria-hidden="true" className="search-glyph">⌕</span>
+            <svg aria-hidden="true" className="search-glyph" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg>
             <label htmlFor="search" className="filter-label">
               Search requests
             </label>
