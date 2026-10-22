@@ -106,6 +106,7 @@ function QueueState({ query }: { query: string }) {
           { value: "OPEN", label: "Open" },
           { value: "IN_REVIEW", label: "In review" },
           { value: "APPROVED", label: "Approved" },
+          { value: "REJECTED", label: "Rejected" },
           { value: "COMPLETED", label: "Completed" },
         ].map(({ value, label }) => (
           <button key={label} type="button"

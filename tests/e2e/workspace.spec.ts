@@ -157,6 +157,8 @@ test("v2 workspace quick filters, search reset and navigation work responsively"
   await page.goto("/");
   await expect(page.getByRole("navigation", {name: "Primary navigation"})).toBeVisible();
   await expect(page.getByRole("link", {name: "All requests", exact: true})).toHaveAttribute("aria-current","page");
+  await page.getByRole("button", {name: "Rejected", exact: true}).click();
+  await expect(page).toHaveURL(/status=REJECTED/);
   await page.getByRole("button", {name: "Open", exact: true}).click();
   await expect(page).toHaveURL(/status=OPEN/);
   await expect(page.getByRole("button", {name: "Open", exact: true})).toHaveAttribute("aria-pressed","true");
@@ -171,7 +173,7 @@ test("v2 workspace quick filters, search reset and navigation work responsively"
   await noHorizontalOverflow(page);
 });
 
-test("v2 progress guidance matches the actual lifecycle state",async ({page,request}) => {
+test("v2 progress guidance matches the actual lifecycle state",async ({page,request},testInfo) => {
   const row=await create(request);
   await page.goto("/requests/"+row.id);
   const progress=page.getByRole("group",{name:"Request progress"});
@@ -179,5 +181,12 @@ test("v2 progress guidance matches the actual lifecycle state",async ({page,requ
   await page.getByRole("button",{name:"Start review",exact:true}).click();
   await page.getByRole("dialog").getByRole("button",{name:"Start review",exact:true}).click();
   await expect(progress.getByText("In review",{exact:true}).locator("..")).toHaveAttribute("aria-current","step");
+  if (testInfo.project.name === "mobile-375") {
+    const decision = await page.locator(".decision-panel").boundingBox();
+    const notes = await page.locator(".detail-notes").boundingBox();
+    expect(decision, "Decision panel must be visible").not.toBeNull();
+    expect(notes, "Notes panel must be visible").not.toBeNull();
+    expect(decision!.y + decision!.height, "Decision should precede note entry on mobile").toBeLessThan(notes!.y);
+  }
   await noHorizontalOverflow(page);
 });

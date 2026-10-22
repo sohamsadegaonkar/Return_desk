@@ -1363,3 +1363,11 @@ h1 {
 .field-label-row { display:flex; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
 .field-label-row .field-label { margin-bottom:0; }
 .field-label-row .field-required { margin-left:0; }
+
+/* Mobile flow: keep all status filters discoverable and place decisions before notes. */
+.detail-notes { grid-column: 1; min-width: 0; }
+@media (max-width: 767px) {
+  .queue-quick-filters { flex-wrap: wrap; overflow-x: visible; gap: 8px; }
+  .quick-filter { white-space: nowrap; }
+  .detail-notes { grid-column: 1; }
+}
