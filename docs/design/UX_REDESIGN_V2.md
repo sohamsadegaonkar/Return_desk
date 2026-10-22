@@ -47,3 +47,6 @@ Controls are actual navigation links, status filters, pagination or existing API
 - Conduct real browser review at 375, 390, 768 and 1440 CSS px, with keyboard focus, overflow, loading/errors, and long content. Isolated CI results do not prove public-site acceptance.
 - Do not merge to integration/main or trigger Render deploy before exact PR CI and user visual approval.
 - Do not claim an editable Figma artifact until connected and actually authored.
+
+## Latest browser evidence and Figma boundary
+[UI source run 39870760077](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39870760077) **PASS**, six full-page screenshots from isolated desktop/375px Playwright. Latest mobile screens make all six statuses visible without scrolling and place the contextual decision CTA before notes in logical DOM order. These screenshots serve as the current implementation reference, not an editable design-system component library. Figma account access was confirmed with two available workspaces; **new-file creation is awaiting owner workspace selection**. No live user testing or Figma review has happened yet.

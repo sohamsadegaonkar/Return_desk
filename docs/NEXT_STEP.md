@@ -1,11 +1,10 @@
-# Next working step — qualify the UI v2 candidate
+# Next working step — UI v2 visual approval and editable Figma pages
 
-**Predecessor:** CP-006 hosted API and cross-deployment persistence passed on the accepted application. User explicitly rejected the dated visual UI and requested new UX research and Figma-quality design. Existing integration CI [39865008569](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39865008569) passed on b522568; it did NOT test UI v2. The UI redesign is currently an **unmerged branch candidate**; public Render is unchanged.
+**Verified predecessor:** exact source `28a25ceb479fa19c88b8e7260897a70b85372cfb` passed [CI 39870760077](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39870760077), 19/19 steps; browser evidence contains queue, create and detail screenshots for desktop and 375px. Source diff remains within UI/UX, isolated tests and docs. Hosted Render still runs previously accepted application; **PR #9 remains draft, unmerged** and CP-007 human approval is still pending.
 
-1. Review [CP-007](checkpoints/CP-007-ui-ux-redesign.md) and [Figma/design-system handoff](design/UX_REDESIGN_V2.md); inspect exact source diff and accessibility/interaction impact. Do not claim a Figma design file exists without connection.
-2. Exact source CI [39868873522](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39868873522) PASSED after correcting label markup and ambiguous navigation QA target. Read the desktop/375px [artifact screenshots](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39868873522) and inspect live keyboard focus, dialogs, loading/empty states and long strings before signoff.
-3. Obtain user visual approval from a real browser screenshot/preview at 375px and desktop. Inspect keyboard navigation and every visible button/interaction.
-4. Only after approval merge to integration, verify integrated CI, redeploy Render and conduct hosted UI/browser acceptance against the existing synthetic database. Do not re-seed.
-5. Then finish CP-006 security/ops cleanup, author hours, GitHub metadata and PR #1 to main before 23 October 2026 11:00 IST. Do not invent signoff or completion.
+1. Present **all three screen flows**, especially the 375px detail where decisions now precede notes. Obtain specific feedback on discoverability, readability and every real available user action. The screenshots were produced from isolated CI, not an editable Figma canvas or live Render.
+2. Figma access was verified, but the account lists **two potential teams/workspaces**; ask the owner to select one before creating a new design file, per Figma creation procedure. Preferred deliverable: editable Figma frames for desktop/mobile Queue, Create, Detail and modal states, using [tokens and components](design/UX_REDESIGN_V2.md). This step has not been executed.
+3. If the owner approves actual visual design and a Figma frame/component review passes, merge PR #9 into integration after checking exact status, CI and manifest. Verify merged integration CI and deploy Render exact SHA; no database reseed. Run hosted desktop/375px visual/keyboard and API read-only acceptance.
+4. Finally complete CP-006 security/ops cleanup, author hours and repo metadata, review/merge PR #1 to main, and submit per [release checklist](RELEASE_CHECKLIST.md). Deadline remains **23 October 2026, 11:00 IST**. Do not invent signoff or claim delivery.
 
-User acknowledgement is PENDING.
+**Current stop boundary:** do not merge PR #9 or PR #1, and do not redeploy live Render until review/approval. The next dependency is human Figma workspace selection and UI visual signoff.
