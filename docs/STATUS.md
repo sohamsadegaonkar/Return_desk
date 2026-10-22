@@ -19,3 +19,6 @@
 
 ## New user-requested UI redesign (UNMERGED CANDIDATE)
 After the user rejected the old generic interface, the next design candidate adds adaptive navigation, URL-backed quick filters and search reset, clearer form labels and status progress, and a coordinated visual-token layer. API/database unchanged. **Not yet qualified by CI, deployed, previewed in Figma, or approved by user.** The existing Render service remains the last accepted API deployment. See [CP-007](checkpoints/CP-007-ui-ux-redesign.md) and [UI design handoff](design/UX_REDESIGN_V2.md). Existing release gates remain open.
+
+### CP-007 tested candidate update
+Exact candidate CI [39868873522](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39868873522) **PASS** on bf1aa8d (19/19 workflow steps, 16 browser-project scenarios), following correction of the first browser failure. Desktop 1440 and mobile 375 screenshots were generated and integrator-inspected. **User design approval and Figma file are still pending**; PR #9 remains draft, and current Render continues to show the old UI.
