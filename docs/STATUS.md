@@ -1,23 +1,18 @@
 # ReturnDesk release status — 23 October 2026 (Asia/Kolkata)
 
-**Deadline:** 23 October at 11:00 AM IST. **Integration head:** `56fa9cfb1eac0734800f3e95338a04fda14e5ad1`. **Main:** release PR #1 still draft/unmerged.
+**Deadline:** 11:00 AM IST, 23 October 2026. **Verified integration head:** `83873e98d87ad432d91b26877a346fd73bbe1b1d`. **PR #1 integration → main:** still DRAFT/UNMERGED. **User release acknowledgment:** PENDING.
 
-## New public read-only acceptance evidence (user-reported terminal results)
-- After a successful external PostgreSQL migration and a synthetic seed, Codespaces GET of `/api/requests?pageSize=50` returned HTTP **200**, `pagination.total=36`, 36 rows; GET fixed seeded request `00000000-0000-4000-8000-000000000001` returned HTTP **200**, one note. These are **user-supplied terminal observations**, not a server-side CI or connector result.
-- This proves public read-only database-backed behaviour. **Live create/edit/transition/note/removal and actual service-restart persistence remain NOT RUN**. No production/customer records; only synthetic data.
-- Opt-in source-controlled live smoke proposed in a separate PR with offline mock verification on every CI run. Its live-write mode requires `RETURNDESK_LIVE_TEST=YES`. Until manually executed successfully, do not mark CP-006 fully qualified.
+## Passed — provider, CI and actual hosted demo evidence
+- [CI 39862332316](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316) **SUCCESS** on `83873e98d87ad432d91b26877a346fd73bbe1b1d`: lint, typecheck, production build, 106 unit/client tests, 57 isolated real-HTTP tests, 23 PostgreSQL invariant checks, 12 desktop/375px Playwright tests, and offline public smoke harness. CI used disposable PostgreSQL, **not hosted Render**.
+- Hosted Render web deployment `dep-dbd8k9brjlhs73ccuuc0` of exactly `83873e98d87ad432d91b26877a346fd73bbe1b1d` confirmed **LIVE** at 03:43:43 IST, 23 October. https://returndesk-submission-demo.onrender.com
+- Hosted PostgreSQL migration and clean synthetic seed completed in Codespaces. Public GET list initially showed **HTTP 200, 36 visible / 36 returned**; fixed synthetic detail **HTTP 200, one note**.
+- Public manual write harness `RETURNDESK_LIVE_TEST=YES npm run test:live:run` reported **LIVE WORKFLOW SMOKE PASSED**: synthetic create/read/edit, legal status chain, stored refund decision (no payment executed), blocked terminal edit, append/read note, search/status filter, soft removal and hidden 404. One added Completed request remains visible; no seeded record was mutated.
+- The user ran `npm run test:live:verify` **again after the confirmed new deployment was Live**, reporting completed record HTTP 200 and removed record HTTP 404, ending **POST-RESTART READ VERIFICATION PASSED**. This is evidence of *persistence across Render deployment*; it does not independently verify the physical host actually restarted.
 
-## Passed, observed
-- [GitHub Actions 39844358279](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279) **SUCCESS** on exact integration head: clean install, lint, typecheck, build, PostgreSQL16 migrations, safe 36-request/6-note seed and repeat refusal, 23 database checks, **106 unit/client**, **57 direct HTTP**, **12 desktop/375px browser tests**. This verification used isolated CI PostgreSQL, **not** the Render database.
-- CP-000–005 document implemented and tested application slices; CP-006 still blocked on public-hosted acceptance. [Source and QA checkpoint index](checkpoints/INDEX.md) is complete, and [release checklist](RELEASE_CHECKLIST.md) distinguishes isolated CI from actual deployment.
-- Render free Node service `srv-dbd5tcu7bikc73f7nno0` successfully deployed reviewed app commit `d01f7e5` (the subsequent `56fa9cf` merge changed checkpoint Markdown only), deployment `dep-dbd6jfrl550s73arv5lg` LIVE, https://returndesk-submission-demo.onrender.com .
-- Render free PostgreSQL16 `dpg-dbd5rpo473hc73dh0vrg-a` AVAILABLE in Singapore, no backups, expires 21 November 2026 UTC.
-- GitHub repository is PUBLIC; it has no description and no homepage set as of this check.
+## Outstanding release gates
+- Real **live public-browser acceptance at desktop and 375px**, including queue/workspace, note, action visibility, menu/overflow, focus/keyboard and error presentation. Isolated Playwright CI results do not prove this production-URL check.
+- Full historical secret scan and dependency/advisory review, and removal of any temporary Render PostgreSQL external-client IP access. Public routes are intentionally unauthenticated; use **synthetic demonstration data only**.
+- Repository description and homepage are unset. Author's actual development hours are **NOT SUPPLIED**; no hours invented.
+- CP-006 human acceptance, review of the final merge candidate, PR #1 merge to main, successful main CI and required submission are **PENDING**. No submission email has been sent.
 
-## Not verified / release-blocking
-- User reports setting `DATABASE_URL` in Render; connector does **not** reveal the stored value or authenticate a connection. The presence/correctness of the configured variable is **unverified**. No secrets have been requested or committed.
-- User supplied evidence for hosted migrations, seeded synthetic rows and public read-only GETs; six total notes have not been independently counted on the public instance. Public API **writes**, browser workflows and persistence across actual service restart have **not been demonstrated**. Direct web/terminal access to the public Render hostname was not available from this execution environment. Render service LIVE alone does not qualify the demo.
-- The public demo deliberately has **no authentication/tenant segregation**. Use synthetic data only. A targeted source and repository inventory review found no committed `.env`, private-key path or archive; this is not a comprehensive security scan. See [release security review](SECURITY_RELEASE_REVIEW.md).
-- Actual author's development hours are **not supplied**. Submission email and final PR #1 merge **not performed**. User acceptance acknowledgment **PENDING**.
-
-**Verdict:** Application/CI PASS; **public-hosted release BLOCKED**. Next: [NEXT_STEP](NEXT_STEP.md) and [CP-006](checkpoints/CP-006-render-release.md).
+**Verdict:** Backend API, hosted database/write workflow and persistence across deployment **PASS**. Final public browser, security/ops, metadata/hours and release merge **PENDING**. See [release checklist](RELEASE_CHECKLIST.md), [CP-006](checkpoints/CP-006-render-release.md), [next step](NEXT_STEP.md).
