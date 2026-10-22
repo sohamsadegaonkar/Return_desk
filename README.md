@@ -4,9 +4,11 @@ A focused returns workspace for customer-care teams. Built from create-next-app 
 
 ## Current state
 
-The required ReturnDesk source and responsive UI are implemented and reviewed on `integration/foundation`, the [open draft implementation PR](https://github.com/sohamsadegaonkar/Return_desk/pull/1) into `main`. The **latest integrated head `56fa9cfb1eac0734800f3e95338a04fda14e5ad1` passed [GitHub Actions CI 39844358279](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279)**: 106 domain/client tests, PostgreSQL 16 migrations plus safe 36-request/six-note seed and 23 database checks, 57 direct HTTP tests, 12 desktop/375px Playwright tests, lint, typecheck and build. These outcomes are on an **isolated CI database**. The `main` branch is **not yet merged or release-qualified**.
+The implementation on `integration/foundation` at `83873e98d87ad432d91b26877a346fd73bbe1b1d` passed [CI 39862332316](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316): isolated PostgreSQL migrations/safe seed and DB checks, 106 unit/client, 57 HTTP, 12 desktop/375px Playwright, offline live-smoke harness, lint, typecheck and build.
 
-The Render Node service reports a successful deployment of reviewed application code. **Its public database-backed user journeys are not verified**, and hosted PostgreSQL migrations/seed have not been confirmed. Use only synthetic demo records: the application intentionally has **no authentication or tenant isolation**, and approval records do not send payments. See [status](docs/STATUS.md), [CP-006](docs/checkpoints/CP-006-render-release.md), and the [release checklist](docs/RELEASE_CHECKLIST.md).
+The **actual hosted** Render URL, https://returndesk-submission-demo.onrender.com, passed an opt-in synthetic public read/write smoke, including create, edit, legal status transitions, approval decision, note, search/filter and soft removal. Render's reviewed `83873e9` deploy completed and became Live. A subsequent owner-run read-only verify **passed after that deployment**, confirming saved Completed and removed resources persisted. This does not prove a physical host restart or live 375px browser acceptance.
+
+**The implementation PR [#1](https://github.com/sohamsadegaonkar/Return_desk/pull/1) into `main` remains draft/unmerged.** Live mobile UI, security/ops cleanup, metadata, author hours, final merge and submission are pending. This deliberately unauthenticated, non-multitenant app is for synthetic demonstration data only; no payment is executed. See [status](docs/STATUS.md) and [CP-006](docs/checkpoints/CP-006-render-release.md).
 
 ## Setup from a clean checkout
 
@@ -46,7 +48,7 @@ The default test suite is independent domain/client testing. Real PostgreSQL/HTT
 5. In another terminal, set TEST_BASE_URL=http://127.0.0.1:3001, TEST_DATABASE_URL, and ALLOW_TEST_WRITES=1; run `npm run test:api`.
 6. `npx playwright install chromium`, then `npm run test:e2e` with the same isolated test variables. Tests cover desktop and 375px layouts.
 
-Test variables must be exported into each terminal; copying `.env.example` does not export shell variables. Tests add uniquely named synthetic fixtures and refuse a protected demo/production target. They never truncate existing data. Use a disposable test database. The reviewed [GitHub Actions verification workflow](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279) **passed on the exact `56fa9cf` integration commit** with fresh PostgreSQL16 containers, migrations, repeat-seed safeguards, all HTTP and browser tests. This does not prove the Render database was initialized or that the public URL is functional.
+Test variables must be exported into each terminal; copying `.env.example` does not export shell variables. Tests add uniquely named synthetic fixtures and refuse a protected demo/production target. They never truncate existing data. Use a disposable test database. The reviewed [GitHub Actions verification workflow](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316) passed on exact merged integration commit `83873e9` against isolated PostgreSQL16, including offline smoke harness, all HTTP and browser tests. Separately, real public hosted read/write testing and post-deploy persistence passed in the owner's Codespace.
 
 ## Product and architecture
 
@@ -73,19 +75,19 @@ RETURNDESK_LIVE_TEST=YES npm run test:live:run
 
 The harness tests create → edit → In Review → Approved (recorded synthetic refund, no payment) → Completed, append-only note, search/status filter, forbidden edit and Open soft removal. It stores a synthetic record identifier under `/tmp/returndesk-public-smoke-state.json` without secrets. **After actually restarting the Render web service**, run `npm run test:live:verify` to check that state survived. The verification command alone does not prove a restart happened; it requires a genuine restart between modes. Do not rerun live writes casually, and do not use real customer data. The seeded 36 records are never mutated.
 
-**New hosted evidence (user-provided Codespaces output):** GET public list HTTP 200, `pagination.total=36`, 36 rows, and fixed seeded record detail HTTP 200 with one note. This confirms **public read-only** operation, not the live-write or restart-persistence gates.
+**Hosted acceptance evidence:** User Codespaces confirmed initial 36 synthetic records and one seed note; manual synthetic `test:live:run` PASS (write workflows) and read-only `test:live:verify` PASS **after** Render confirmed a new reviewed commit Live. See [CP-006](docs/checkpoints/CP-006-render-release.md).
 
 ## Delivery and remaining work
 
-**Public GitHub repository:** https://github.com/sohamsadegaonkar/Return_desk (source candidate on `integration/foundation`; `main` is not yet updated).
+**Public source repository:** https://github.com/sohamsadegaonkar/Return_desk — reviewed current application code on `integration/foundation`; [PR #1](https://github.com/sohamsadegaonkar/Return_desk/pull/1) to `main` remains draft.
 
-**Reserved Render URL:** https://returndesk-submission-demo.onrender.com . Render reports that its web process deployed successfully, but **this link is not yet accepted as a functional submission demo**. The connected tools cannot read the stored Render `DATABASE_URL` value. The user verified the external PostgreSQL connection, applied migrations, seeded the synthetic database, and confirmed public list/detail GET responses from Codespaces (HTTP 200, 36 visible, one note on the checked seed record). **Live writes, full note totals, user journeys, and restart persistence remain unverified.**
+**Live hosted demo:** https://returndesk-submission-demo.onrender.com — Render deployment `dep-dbd8k9brjlhs73ccuuc0` at `83873e9` **Live**; initial seeded public list/detail GET, manual synthetic writes and read-after-deployment verification **passed**.
 
-**Host configuration:** Free PostgreSQL16 and a Free Node web service are created in Singapore. On Render, use the internal Postgres URL for the web-service `DATABASE_URL`, without posting credentials in Git/chat. From a trusted CLI use the provider's external URL, narrow IP allowlisting and required TLS to run committed `npm run db:migrate` and then `npm run db:seed` once on the designated empty synthetic-demo database (with `NODE_ENV` not `production`). Do not run migration/seed during build, app startup or public requests. See [deployment handoff](docs/engineers/deployment.md). Free Render Postgres expires **21 November 2026 UTC** and has no backups; this is a temporary demo, not production storage.
+**Hosting:** Free PostgreSQL 16 and Free Node service, Singapore. Web service `DATABASE_URL` is private; do not publish secrets. Run schema migration/seed only from trusted CLI against a fresh, dedicated demo database, never on server build/start/HTTP. Already initialized; **do not rerun seed**. Remove temporary external Postgres IP permission. Free hosted Postgres expires **21 November 2026 UTC** and has no backups.
 
-**Remaining release gates:** verify externally that the public queue, creation, status transitions, notes, edits and soft removal work with persistent hosted data; test the 375px layout and persistence after a restart; finish release/security review; update the repo description and README with *verified* links, obtain the author's actual hours, and merge [PR #1](https://github.com/sohamsadegaonkar/Return_desk/pull/1) to `main` only after its gates pass. The submission email has **not been sent**.
+**Remaining release gates:** live **375px/desktop hosted browser** walkthrough and evidence, targeted secrets/history/dependency review, access cleanup, GitHub description/homepage, actual author's working hours, user acknowledgment, reviewed PR #1 merge and success CI on `main`, then submission before 11:00 IST.
 
-**Author's actual development hours:** **NOT SUPPLIED**. Do not invent a number. **Submission deadline:** 23 October 2026 at 11:00 AM Asia/Kolkata. Dependencies still report the existing ESLint9 deprecation warning; optional event timelines and idempotency keys are deferred.
+**Author hours:** **NOT SUPPLIED**; do not invent. **Deadline:** 23 October 2026, 11:00 AM IST. **Submission email:** not sent.
 
 ## Working protocol
 

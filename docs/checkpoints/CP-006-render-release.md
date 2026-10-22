@@ -1,37 +1,23 @@
-# CP-006 — Hosted release rehearsal (PARTIAL / BLOCKED)
+# CP-006 — Hosted release rehearsal (PARTIAL / FINAL GATES OPEN)
 
-**Current 23 October update:** The earlier uninitialized-database facts below are historical and superseded for read-only access by the latest evidence at the end of this checkpoint. The release gate is still BLOCKED on live writes/restart/UI.
+**Date:** 23 October 2026 IST. **Dependency:** CP-001–CP-005 and exact integration head `83873e98d87ad432d91b26877a346fd73bbe1b1d`. **Requirement IDs:** STACK-01, DATA-01, SEED-01, SUB-01, SUB-02, SUB-03. **Review:** integrator self-review, not an independent evaluation. **Human acceptance:** PENDING.
 
-**Date:** 23 October 2026, Asia/Kolkata. **Dependency:** CP-001 through CP-005 and exact integrated CI on `d01f7e54958ed1287c1c29c0925b45f3b9f42967`. **Requirement IDs:** STACK-01, DATA-01, SEED-01, SUB-01, SUB-02, SUB-03. **User acknowledgment:** PENDING.
+## Current authoritative evidence
 
-## Actual execution evidence
-- [GitHub Actions 39838667897](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39838667897) succeeded on the exact `d01f7e54958ed1287c1c29c0925b45f3b9f42967` commit. Exact merged-branch CI 39838667897 (job 120034052250) on d01f7e54958ed1287c1c29c0925b45f3b9f42967 PASSED: clean npm install, lint, typecheck, production build, PostgreSQL16 migration twice, seed of 36 synthetic requests and six notes with second-seed refusal, 23 database invariant assertions, 106 domain/client tests, 57 HTTP tests and all 12 desktop/375px Playwright scenarios. This used disposable CI PostgreSQL, not hosted Render.
-- Render Singapore Free PostgreSQL 16 `dpg-dbd5rpo473hc73dh0vrg-a` is AVAILABLE, expires 21 November 2026 UTC, and offers no free automatic backups. [Database dashboard](https://dashboard.render.com/d/dpg-dbd5rpo473hc73dh0vrg-a).
-- Render Singapore Free Node web service `srv-dbd5tcu7bikc73f7nno0`, autoDeploy OFF, successfully built Next.js, bound to port 10000 and reports LIVE at https://returndesk-submission-demo.onrender.com, on earlier reviewed app SHA `89f11b5`. [Service dashboard](https://dashboard.render.com/web/srv-dbd5tcu7bikc73f7nno0).
-- Independently inspected saved desktop/375px queue screenshots from passing CI artifact: no obvious queue horizontal overflow. They depict the isolated CI app, not the live deployed URL.
+Verified evidence chain: [CI 39862332316](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316) SUCCESS on 83873e98d87ad432d91b26877a346fd73bbe1b1d; Render deploy `dep-dbd8k9brjlhs73ccuuc0` LIVE at 03:43:43 IST on 23 Oct 2026 (22:13:43 UTC on 22 Oct) at exact commit. The operator reported public GET list HTTP 200 (36 initial visible rows) and seed detail HTTP 200 (one note), then `test:live:run` PASS on create/read/edit/In Review/Approved with synthetic REFUND/Completed/locked edit/append note/search/status-filter/soft removal. After the confirmed Live deployment was communicated, the operator reran `test:live:verify`; HTTP 200 on saved Completed item and HTTP 404 on removed item; all assertions PASS. That chronological evidence qualifies **persistence across a completed deployment**. It does not prove an underlying VM/DB instance was physically restarted, nor does it substitute for live browser verification.
 
-## Blocking evidence and limits
-- Render service `DATABASE_URL` has not been configured; **hosted** migrations, seed, public API/user journeys and server restart persistence were **NOT RUN**. The Render tool reports Postgres metadata but does not return connection password/URL. A read-only SQL attempt was blocked by an empty external IP allowlist; it was not relaxed. Web fetch from this environment and DNS lookup of the URL were unavailable. A LIVE web process is not proof of database-backed functionality.
-- Free web services do not provide an interactive shell or pre-deploy migration command. Do not move seed into startup, create a public initialization endpoint, leak database credentials or open unrestricted network ingress. Initial site is not a submission-ready demo.
-- Public draft PR #1 remains OPEN/UNMERGED, README author-reported actual hours missing. No real customer data; synthetic demo only.
+**Other evidence:** [CI 39862332316](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316) green on the same SHA with 106 domain/client cases, 57 isolated HTTP, 23 isolated DB invariant checks, 12 desktop/375px Playwright cases, offline public smoke harness, production build/lint/typecheck. The **hosted** user-terminal smoke is separate from isolated CI. Initial hosted seed list had 36 records before public smoke created two synthetic records (one Completed visible, one removed). Six seed notes proved in isolated CI; only one checked directly on hosted seed.
 
-## Review / checkpoint verdict
-Integrator **self-review**, no code or schema change; available GitHub/Render results inspected. **PARTIAL/BLOCKED**, no claim of hosted acceptance or user acknowledgment. Fresh official operational references: [Render Free](https://render.com/docs/free), [Render deploys](https://render.com/docs/deploys). No new algorithmic or research-paper choice.
+## Scope and limitations
+- No application-route, schema, security model, payment integration or real-customer-data change was made to accomplish hosted smoke. The public app deliberately has **no authentication or tenant segregation** and must remain disposable synthetic-demo-only.
+- Read-after-deployment with confirmed Render replacement is PASS; no independent evidence of underlying machine restart. The script does not generate a deployment event by itself.
+- Live **375px public-browser** layout and manual usability pass **NOT RUN**. CI Playwright at 375px uses isolated application/DB.
+- Historic pre-migration failures, initial HTTP 500 and old checkpoint conclusions are **superseded** by the evidence above.
 
-## Next working step
-In the Render dashboards, privately set web `DATABASE_URL` using its Postgres internal URL. On a trusted local CLI using the permitted external connection/TLS, run `npm ci`, `npm run db:migrate`, then `npm run db:seed` once only against the empty demo DB (outside NODE_ENV=production), verifying 36 rows/six notes. Then reverify deployment, test all required flows externally at desktop/375px, check persistence after restart, and only after actual success review release PR #1, README, checklist and author's hours before 11:00 IST.
+## Remaining gates
+1. Browser acceptance on actual hosted URL at desktop + 375px, record screenshot/issues.
+2. Security/history/dependency review, revoke any temporary PostgreSQL external-IP allowlist, verify synthetic-only data.
+3. GitHub metadata (description/homepage), actual author hours and user acknowledgment.
+4. Final reviewed PR #1 integration → main, successful main CI, submission links by **11:00 IST 23 October**. Email not sent.
 
-## Release owner update — 23 October 2026
-
-Full exact merged integration CI [39844358279](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279) **SUCCESS** on `56fa9cfb1eac0734800f3e95338a04fda14e5ad1`: lint, typecheck, build, 106 unit/client, PostgreSQL16 migrations/repeat-safe synthetic seed/23 assertions, 57 HTTP and 12 browser cases. Render deployment `dep-dbd6jfrl550s73arv5lg` reports LIVE on application commit `d01f7e5`; the later `56fa9cf` commit changed documentation only. GitHub repository remains public, and PR #1 remains draft.
-
-User reports having pasted Render `DATABASE_URL`, but the connector does not expose the stored setting. It is **not confirmed** that the connection works. Hosted migration, seed, API/browser flow and restart persistence remain **NOT VERIFIED**. A private read-only SQL attempt was blocked by Render's restricted external IP allowlist, which was not relaxed. The public onrender hostname also could not be fetched from this execution environment. No database credential was disclosed and no production data was touched.
-
-Scoped release security review in [SECURITY_RELEASE_REVIEW.md](../SECURITY_RELEASE_REVIEW.md): source/API/database guardrails inspected, public unauthenticated routes documented as **synthetic trusted-agent-demo-only**, and repository file inventory checked for excluded environment/private-key files. This is a static targeted review, not a complete penetration test, GitHub code-scanning clearance or demonstration of live app security.
-
-**Release verdict remains BLOCKED** on (1) owner-controlled one-time external CLI migration + seed, (2) external public smoke / 375px check / restart persistence, (3) GitHub description/homepage and final README hours, (4) final main PR merge and submission. User acknowledgment PENDING. Do not infer release completion from a deployed process or isolated CI.
-
-## Next reviewed candidate — live workflow smoke harness
-User supplied Codespaces outputs: public list HTTP 200, 36 visible/36 returned and seeded detail HTTP 200 with one note, following hosted migration and seed. **This is public read-only acceptance evidence; no live write or actual service restart acceptance yet.** A source-controlled opt-in synthetic smoke harness is being introduced with a fixed Render origin, `RETURNDESK_LIVE_TEST=YES` write guard, synthetic-only writes and a `/tmp` state receipt. Its offline injected-transport tests will run on regular CI; the real live mode is **manual-only and unexecuted**. Test origin and contract are reviewed against the existing 57 HTTP and 12 browser CI cases.
-
-**Pre-push scope:** script + offline tests + npm scripts + narrow CI test step + README, checkpoint, STATUS, NEXT_STEP, TEST_PLAN, RESEARCH_LOG. No migrations, route handlers, Render config, production data, or main merge. Review type: integrator self-review, not an independent external reviewer. User acknowledgment remains PENDING. **Next:** exact-head PR CI then authorized live smoke, real restart and 375px visual acceptance.
+**Verdict:** hosted read/write lifecycle and cross-deployment persistence **PASS**; release remains **PARTIAL** due open tasks. [NEXT_STEP](../NEXT_STEP.md) is the next dependency.
