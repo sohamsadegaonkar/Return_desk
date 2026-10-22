@@ -1,6 +1,6 @@
 # Requirement traceability
 
-Local domain/client suite: 106 tests passed. Real PostgreSQL, HTTP workflow and browser acceptance remain pending the isolated CI gate. IDs below are stable test/review references.
+As of 23 October 2026, **isolated CI passed** on exact integration commit `56fa9cf` ([run 39844358279](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279)): 106 unit/client tests, 23 PostgreSQL16 assertions, 57 HTTP cases, 12 desktop/375px browser scenarios. **External Render-backed data flows and app-restart persistence remain unverified.** IDs below are requirement tracing references. IDs below are stable test/review references.
 | ID | Requirement | Verification target |
 |---|---|---|
 | STACK-01 | App Router + React, Node backend, PostgreSQL, Tailwind | Dependency/build/runtime review |
