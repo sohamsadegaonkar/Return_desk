@@ -14,7 +14,10 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:api": "vitest run --config tests/integration/vitest.config.ts",
-    "db:check": "node --import tsx scripts/check-db.ts"
+    "db:check": "node --import tsx scripts/check-db.ts",
+    "test:smoke-harness": "node --test tests/smoke/public-smoke.test.mjs",
+    "test:live:run": "node scripts/public-smoke.mjs run",
+    "test:live:verify": "node scripts/public-smoke.mjs verify"
   },
   "dependencies": {
     "dotenv": "18.0.8",

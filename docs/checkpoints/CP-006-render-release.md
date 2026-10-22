@@ -1,5 +1,7 @@
 # CP-006 — Hosted release rehearsal (PARTIAL / BLOCKED)
 
+**Current 23 October update:** The earlier uninitialized-database facts below are historical and superseded for read-only access by the latest evidence at the end of this checkpoint. The release gate is still BLOCKED on live writes/restart/UI.
+
 **Date:** 23 October 2026, Asia/Kolkata. **Dependency:** CP-001 through CP-005 and exact integrated CI on `d01f7e54958ed1287c1c29c0925b45f3b9f42967`. **Requirement IDs:** STACK-01, DATA-01, SEED-01, SUB-01, SUB-02, SUB-03. **User acknowledgment:** PENDING.
 
 ## Actual execution evidence
@@ -28,3 +30,8 @@ User reports having pasted Render `DATABASE_URL`, but the connector does not exp
 Scoped release security review in [SECURITY_RELEASE_REVIEW.md](../SECURITY_RELEASE_REVIEW.md): source/API/database guardrails inspected, public unauthenticated routes documented as **synthetic trusted-agent-demo-only**, and repository file inventory checked for excluded environment/private-key files. This is a static targeted review, not a complete penetration test, GitHub code-scanning clearance or demonstration of live app security.
 
 **Release verdict remains BLOCKED** on (1) owner-controlled one-time external CLI migration + seed, (2) external public smoke / 375px check / restart persistence, (3) GitHub description/homepage and final README hours, (4) final main PR merge and submission. User acknowledgment PENDING. Do not infer release completion from a deployed process or isolated CI.
+
+## Next reviewed candidate — live workflow smoke harness
+User supplied Codespaces outputs: public list HTTP 200, 36 visible/36 returned and seeded detail HTTP 200 with one note, following hosted migration and seed. **This is public read-only acceptance evidence; no live write or actual service restart acceptance yet.** A source-controlled opt-in synthetic smoke harness is being introduced with a fixed Render origin, `RETURNDESK_LIVE_TEST=YES` write guard, synthetic-only writes and a `/tmp` state receipt. Its offline injected-transport tests will run on regular CI; the real live mode is **manual-only and unexecuted**. Test origin and contract are reviewed against the existing 57 HTTP and 12 browser CI cases.
+
+**Pre-push scope:** script + offline tests + npm scripts + narrow CI test step + README, checkpoint, STATUS, NEXT_STEP, TEST_PLAN, RESEARCH_LOG. No migrations, route handlers, Render config, production data, or main merge. Review type: integrator self-review, not an independent external reviewer. User acknowledgment remains PENDING. **Next:** exact-head PR CI then authorized live smoke, real restart and 375px visual acceptance.
