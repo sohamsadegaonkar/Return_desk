@@ -37,11 +37,11 @@ test("queue searches a real record and fits the viewport", async ({ page, reques
   const row = await create(request);
   await page.goto("/");
   await page.getByLabel("Search requests").fill(row.customerName);
-  await expect(page.getByRole("link", {name: row.reference, exact: true})).toBeVisible();
+  await expect(page.getByRole("link", {name: new RegExp(`^${row.reference}(?:\\s|$)`)})).toBeVisible();
   await expect(page).toHaveURL(/q=/);
   await noHorizontalOverflow(page);
-  await page.getByRole("link", {name: row.reference, exact: true}).click();
-  await expect(page.getByRole("heading", {name: row.reference, exact: true})).toBeVisible();
+  await page.getByRole("link", {name: new RegExp(`^${row.reference}(?:\\s|$)`)}).click();
+  await expect(page.getByRole("heading", {name: new RegExp(`^${row.reference}(?:\\s|$)`)})).toBeVisible();
   await noHorizontalOverflow(page);
 });
 
@@ -110,4 +110,40 @@ test("two-tab stale edit preserves the unsaved draft", async ({page, context, re
   expect((await saved.json()).data.customerName).toBe("First agent saved");
   await noHorizontalOverflow(other);
   await other.close();
+});
+
+test("external removal clears cached details and actions after a refusal", async ({page, request}) => {
+  const row = await create(request);
+  await page.goto(`/requests/${row.id}`);
+  await expect(page.getByRole("heading", {name: row.reference, exact: true})).toBeVisible();
+  const removed = await request.delete(`/api/requests/${row.id}`, {data: {expectedVersion: row.version}});
+  expect(removed.status()).toBe(204);
+  await page.getByLabel("Add a note", {exact: true}).fill("Unsaved after external removal");
+  await page.getByRole("button", {name: "Add note", exact: true}).click();
+  await expect(page.getByRole("alert")).toContainText(/not found|removed/);
+  await expect(page.getByRole("heading", {name: row.reference, exact: true})).toHaveCount(0);
+  await expect(page.getByRole("button", {name: "Edit details", exact: true})).toHaveCount(0);
+  await expect(page.getByRole("button", {name: "Start review", exact: true})).toHaveCount(0);
+});
+
+test("a note committed before a500 response is not blindly retried", async ({page, request}) => {
+  const row = await create(request);
+  let submitted = 0;
+  await page.route(`**/api/requests/${row.id}/notes`, async route => {
+    submitted++;
+    const response = await route.fetch();
+    expect(response.status()).toBe(201);
+    await route.fulfill({status: 500, contentType: "application/json", body: JSON.stringify({error: {code: "INTERNAL_ERROR", message: "The response was interrupted after processing.", fieldErrors: {}}})});
+  });
+  await page.goto(`/requests/${row.id}`);
+  const note = `Response-loss note ${randomUUID()}`;
+  await page.getByLabel("Add a note", {exact: true}).fill(note);
+  await page.getByRole("button", {name: "Add note", exact: true}).click();
+  await expect(page.getByText("A response was interrupted.", {exact: true})).toBeVisible();
+  await expect(page.getByLabel("Add a note", {exact: true})).toHaveValue(note);
+  await expect(page.locator("article").filter({hasText: note})).toBeVisible();
+  await expect(page.getByRole("button", {name: "Add note", exact: true})).toBeDisabled();
+  expect(submitted).toBe(1);
+  const saved = (await (await request.get(`/api/requests/${row.id}`)).json()).data;
+  expect(saved.notes.filter((n: {body: string}) => n.body === note)).toHaveLength(1);
 });
