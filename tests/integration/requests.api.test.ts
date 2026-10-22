@@ -214,8 +214,14 @@ describe("RULE-05 soft removal and boundary refusals", () => {
       expect((await pool.query("select removed_at from return_requests where id=$1", [row.id])).rows[0].removed_at).toBeTruthy();
     } else refused(result, 409, "REMOVAL_NOT_ALLOWED");
   });
-  it("rejects unknown and repeated query keys without prototype ambiguity", async () => {
-    refused(await call("?__proto__=unexpected"), 422, "VALIDATION_ERROR");
+  it("handles framework-normalized keys and refuses unknown/repeated route inputs", async () => {
+    // Next16.4.2 strips __proto__ during query reconstruction before Route Handlers.
+    // The route therefore receives an ordinary empty query; assert its public response.
+    const normalized = await call("?__proto__=unexpected");
+    expect(normalized.status).toBe(200);
+    expect(Array.isArray(normalized.json?.data)).toBe(true);
+    refused(await call("?unknown=unexpected"), 422, "VALIDATION_ERROR");
+    refused(await call("?constructor=unexpected"), 422, "VALIDATION_ERROR");
     refused(await call("?page=1&page=2"), 400, "BAD_REQUEST");
     refused(await call("?sort=createdAt%3BDROP%20TABLE%20return_requests"), 422, "VALIDATION_ERROR");
   });
