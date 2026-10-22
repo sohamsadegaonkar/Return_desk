@@ -1,6 +1,6 @@
 # API contract summary
 
-Canonical details: [architecture](architecture.md), sections 4, 6 and 9. Route Handlers and transactional service implemented; real PostgreSQL-backed HTTP execution is pending.
+Canonical details: [architecture](architecture.md), sections 4, 6 and 9. Route Handlers and transactional service implemented; initial real PostgreSQL-backed HTTP execution found a transition-parameter typing defect; reviewed correction awaits a new CI result.
 | Route | Success |
 |---|---|
 | GET /api/requests | 200 data array + pagination |

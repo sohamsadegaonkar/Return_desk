@@ -3,6 +3,7 @@
 Predecessor: reviewed CP-000 plus CP-001 integrated source, component handoffs and local checks. The verified domain/client and build outputs support the runtime candidate; they do not prove PostgreSQL/API/browser workflows.
 
 ## Immediate gate
+CI 39830254331 on 0c9be124 failed its HTTP stage: PostgreSQL status parameter inferred as both text and return_status. Fix explicit enum casts, review independently, then publish and observe the new head. Migration/seed/23 database assertions passed; browser stage was not reached.
 1. Review final exact source/docs/workflow diff and lockfile provenance; publish the reviewed integration branch candidate. Keep PR draft while real runtime results remain unknown.
 2. Observe GitHub Actions on that exact remote head. It must run real PostgreSQL 16 migration twice, safe 36-row/6-note seed and explicit repeated-seed refusal, database invariants, 57 direct-HTTP cases and 12 browser scenarios. Inspect concrete failures; fix owners' paths through reviewed commits, then rerun affected checks. Missing/blocked execution is not PASS.
 3. Record exact CI command/results/revision in CP-001, STATUS and this next-step file. Only actual runtime success can accept CP-001 and the API/UI checkpoints.
