@@ -2,35 +2,28 @@
 
 A guided returns workspace for a small online store.
 
-## Status
+## Current state
 
-Architecture finalized. Application implementation, database setup, tests and deployment are pending. This repository does not yet contain a runnable application.
+Pre-development architecture and governance documentation are prepared. No runnable application, executed migration, application test result or deployed URL exists yet.
 
-## Planned stack
+## Start here
 
-- Next.js App Router and React
-- Node.js Route Handlers
-- TypeScript and Tailwind CSS
-- PostgreSQL and Drizzle
-- Zod, Vitest and Playwright
+- [Repository instructions](AGENTS.md)
+- [Documentation map](docs/INDEX.md)
+- [Current checkpoint status](docs/STATUS.md)
+- [Next working step](docs/NEXT_STEP.md)
+- [Architecture specification](docs/architecture.md)
 
-## Planned workflow
+## Mandatory development workflow
 
-Searchable queue → request workspace → guided decision → clear feedback.
+Every coherent step must be verified and reviewed BEFORE pushing. Every successful checkpoint gets updated Markdown evidence and an explicit next step tied to its predecessor. Actual user acknowledgment is recorded separately and never fabricated. Material implementation decisions require freshly inspected research papers and current official documentation; downloaded skills alone are insufficient. See [workflow](docs/WORKFLOW.md) and [research policy](docs/RESEARCH_POLICY.md).
 
-Requests follow Open → In Review → Approved → Completed, or In Review → Rejected. Server-side rules will protect resolutions, live-item uniqueness, locked details, append-only notes and soft removal.
+## Planned stack and product
 
-## Implementation plan
+Next.js App Router, React, Node.js Route Handlers, TypeScript, Tailwind CSS, PostgreSQL, Drizzle, Zod, Vitest and Playwright.
 
-See [the architecture specification](docs/architecture.md). It is a design contract, not a claim of implemented functionality.
+Searchable queue → request workspace → guided decision → reliable feedback. Required returns lifecycle, resolutions, live-item uniqueness, locked details, notes and soft removal are specified but not implemented.
 
-1. Foundation: scaffold, PostgreSQL migrations and initial deployment.
-2. Create and find: request creation and combined server-side list queries.
-3. Lifecycle: review, approval, rejection and completion.
-4. Record maintenance: editing, notes and removal.
-5. Interface: responsive screens and failure recovery.
-6. Submission: 36-row seed, clean setup verification and deployment checks.
+## Implementation order
 
-## Setup and deployment
-
-Setup commands, environment variables and the deployed URL will be added when the corresponding functionality exists. No tests have been run yet. Actual implementation time will be recorded as work progresses.
+Foundation → Create & Find → Lifecycle → Record maintenance → Responsive UI/recovery → Release rehearsal. Setup commands, environment variables, live URL and actual hours will be documented as they become real. Never use this README as evidence that planned features already work.
