@@ -1,6 +1,6 @@
 # ReturnDesk final scoped release/security review
 
-**Date:** 23 October 2026 (Asia/Kolkata). **Historical scoped review baseline:** `56fa9cfb1eac0734800f3e95338a04fda14e5ad1`; current integrated evidence is `83873e9`.. **Review method:** integrator self-review of actual repository inventory, selected source files, Render metadata and executed GitHub CI; **not** a comprehensive secrets scan, independent pentest or production security certification.
+**Date:** 23 October 2026 (Asia/Kolkata). **Historical scoped review baseline:** `56fa9cfb1eac0734800f3e95338a04fda14e5ad1`; current integrated evidence is `83873e9`. **Review method:** integrator self-review of actual repository inventory, selected source files, Render metadata and executed GitHub CI; **not** a comprehensive secrets scan, independent pentest or production security certification.
 
 ## Reviewed evidence and findings
 
