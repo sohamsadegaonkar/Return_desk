@@ -33,13 +33,14 @@ async function noHorizontalOverflow(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "Page must fit viewport without horizontal scrolling").toBe(true);
 }
 
-test("queue searches a real record and fits the viewport", async ({ page, request }) => {
+test("queue searches a real record and fits the viewport", async ({ page, request }, testInfo) => {
   const row = await create(request);
   await page.goto("/");
   await page.getByLabel("Search requests").fill(row.customerName);
   await expect(page.getByRole("link", {name: new RegExp(`^${row.reference}(?:\\s|$)`)})).toBeVisible();
   await expect(page).toHaveURL(/q=/);
   await noHorizontalOverflow(page);
+  await page.screenshot({path: `test-results/queue-${testInfo.project.name}.png`, fullPage: true});
   await page.getByRole("link", {name: new RegExp(`^${row.reference}(?:\\s|$)`)}).click();
   await expect(page.getByRole("heading", {name: new RegExp(`^${row.reference}(?:\\s|$)`)})).toBeVisible();
   await noHorizontalOverflow(page);
