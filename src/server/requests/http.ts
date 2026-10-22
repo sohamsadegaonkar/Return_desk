@@ -1,4 +1,5 @@
 import { RequestError } from "./errors";
+import { listQuerySchema } from "../../domain/requests/schemas";
 
 const headers = { "Cache-Control": "no-store" };
 export function json(data: unknown, status = 200): Response {
@@ -16,6 +17,8 @@ export function queryInput(request: Request): Record<string, string> {
   const value: Record<string, string> = Object.create(null);
   for (const [key, item] of params) {
     if (Object.hasOwn(value, key)) throw new RequestError(400, "BAD_REQUEST", `Supply the ${key} query parameter once.`);
+    if (!Object.hasOwn(listQuerySchema.shape, key)) throw new RequestError(422, "VALIDATION_ERROR",
+      "Check the query parameters and try again.", { _form: [`Unrecognized query parameter: ${key}`] });
     value[key] = item;
   }
   return value;
