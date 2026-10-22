@@ -148,3 +148,33 @@ test("a note committed before a500 response is not blindly retried", async ({pag
   const saved = (await (await request.get(`/api/requests/${row.id}`)).json()).data;
   expect(saved.notes.filter((n: {body: string}) => n.body === note)).toHaveLength(1);
 });
+
+test("v2 workspace quick filters, search reset and navigation work responsively", async ({page,request}) => {
+  const row = await create(request);
+  await page.goto("/");
+  await expect(page.getByRole("navigation", {name: "Primary navigation"})).toBeVisible();
+  await expect(page.getByRole("link", {name: "All requests", exact: true})).toHaveAttribute("aria-current","page");
+  await page.getByRole("button", {name: "Open", exact: true}).click();
+  await expect(page).toHaveURL(/status=OPEN/);
+  await expect(page.getByRole("button", {name: "Open", exact: true})).toHaveAttribute("aria-pressed","true");
+  await page.getByLabel("Search requests").fill(row.customerName);
+  await expect(page.getByRole("link", {name: new RegExp("^" + row.reference)}).first()).toBeVisible();
+  await page.getByRole("button",{name:"Clear search"}).click();
+  await expect(page.getByLabel("Search requests")).toHaveValue("");
+  await expect(page).not.toHaveURL(/[?&]q=/);
+  await page.getByRole("link", {name: "New request", exact: true}).click();
+  await expect(page.getByRole("heading",{name:"New return request"})).toBeVisible();
+  await expect(page.getByRole("link", {name:"New request",exact:true})).toHaveAttribute("aria-current","page");
+  await noHorizontalOverflow(page);
+});
+
+test("v2 progress guidance matches the actual lifecycle state",async ({page,request}) => {
+  const row=await create(request);
+  await page.goto("/requests/"+row.id);
+  const progress=page.getByRole("group",{name:"Request progress"});
+  await expect(progress.getByText("Open",{exact:true}).locator("..")).toHaveAttribute("aria-current","step");
+  await page.getByRole("button",{name:"Start review",exact:true}).click();
+  await page.getByRole("dialog").getByRole("button",{name:"Start review",exact:true}).click();
+  await expect(progress.getByText("In review",{exact:true}).locator("..")).toHaveAttribute("aria-current","step");
+  await noHorizontalOverflow(page);
+});

@@ -1,10 +1,11 @@
-# Next working step — final hosted UI, security and submission
+# Next working step — qualify the UI v2 candidate
 
-**Verified predecessor:** `83873e98d87ad432d91b26877a346fd73bbe1b1d`, [CI 39862332316](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316) success; Render `dep-dbd8k9brjlhs73ccuuc0` exact SHA Live; manual public read/write smoke passed. **After Live redeployment**, owner re-ran `npm run test:live:verify`: saved Completed request HTTP 200, removed request HTTP 404, verdict PASS. Do not rerun live writes or seed. Submission deadline: **23 October 2026 11:00 IST**.
+**Predecessor:** CP-006 hosted API and cross-deployment persistence passed on the accepted application. User explicitly rejected the dated visual UI and requested new UX research and Figma-quality design. Existing integration CI [39865008569](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39865008569) passed on b522568; it did NOT test UI v2. The UI redesign is currently an **unmerged branch candidate**; public Render is unchanged.
 
-1. **Hosted visual acceptance.** Manually open https://returndesk-submission-demo.onrender.com in browser, inspect at **375 CSS px** and desktop widths. Verify queue loads and search/filter controls, opening detail, legal action labels, notes, responsive form and keyboard, errors and lack of horizontal clipping. Record real observed results and screenshot evidence if possible; CI's 12 Playwright scenarios were isolated, not hosted-URL screenshots.
-2. **Security and operations.** Check data is synthetic, inspect repository/history for leaked values, inspect current dependency advisories and document disposition. Remove temporary external client IP allowlist in Render PostgreSQL now that DB CLI work is finished. Never share URLs with credentials or use real support contacts in this unauthenticated demo.
-3. **Submission metadata.** Set GitHub repository description and homepage (null at last API read). Obtain the author's **actual development hours** (not known, cannot fabricate), verify links and document the decision/acceptance.
-4. **Final release review.** Review CP-006, SECURITY_RELEASE_REVIEW, README, checklist and release PR [#1](https://github.com/sohamsadegaonkar/Return_desk/pull/1). Once remaining gates pass, mark PR ready, merge integration into `main`, confirm exact merged `main` CI, and submit source plus Render links before 11:00 IST. No email is sent without explicit authority.
+1. Review [CP-007](checkpoints/CP-007-ui-ux-redesign.md) and [Figma/design-system handoff](design/UX_REDESIGN_V2.md); inspect exact source diff and accessibility/interaction impact. Do not claim a Figma design file exists without connection.
+2. Run exact-head PR CI with lint, typecheck, 106 unit/client, isolated PostgreSQL/HTTP, existing browser flows plus the new nav/filter/progress tests, at desktop and 375px. Fix regressions before approving a merge.
+3. Obtain user visual approval from a real browser screenshot/preview at 375px and desktop. Inspect keyboard navigation and every visible button/interaction.
+4. Only after approval merge to integration, verify integrated CI, redeploy Render and conduct hosted UI/browser acceptance against the existing synthetic database. Do not re-seed.
+5. Then finish CP-006 security/ops cleanup, author hours, GitHub metadata and PR #1 to main before 23 October 2026 11:00 IST. Do not invent signoff or completion.
 
-**No new application features or migrations** are needed. User acknowledgment is PENDING until supplied.
+User acknowledgement is PENDING.

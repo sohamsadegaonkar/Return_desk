@@ -342,6 +342,22 @@ export function RequestWorkspace({ id }: { id: string }) {
           )}
         </div>
       </div>
+      <div className="progress-strip" role="group" aria-label="Request progress">
+        {(request.status === "REJECTED"
+          ? (["OPEN", "IN_REVIEW", "REJECTED"] as const)
+          : (["OPEN", "IN_REVIEW", "APPROVED", "COMPLETED"] as const)
+        ).map((step, index, steps) => {
+          const current = [...steps].map(String).indexOf(request.status);
+          return (
+            <div key={step}
+              className={"progress-step " + (index < current ? "progress-step-done " : "") + (index === current ? "progress-step-active" : "")}
+              aria-current={index === current ? "step" : undefined}>
+              <span className="progress-number" aria-hidden="true">{index < current ? "✓" : index + 1}</span>
+              <span>{step === "IN_REVIEW" ? "In review" : step === "OPEN" ? "Open" : step === "APPROVED" ? "Approved" : step === "REJECTED" ? "Rejected" : "Completed"}</span>
+            </div>
+          );
+        })}
+      </div>
       {notice && (
         <div role="status" className="success-box">
           ✓ {notice}
@@ -519,12 +535,12 @@ export function RequestWorkspace({ id }: { id: string }) {
               className="mt-3 text-2xl font-semibold tracking-tight"
             >
               {request.status === "OPEN"
-                ? "Ready for a closer look."
+                ? "Review this return"
                 : request.status === "IN_REVIEW"
-                  ? "Make the decision clear."
+                  ? "Choose a resolution"
                   : request.status === "APPROVED"
-                    ? "Carry the promise through."
-                    : "The decision is recorded."}
+                    ? "Finish the return"
+                    : "Decision recorded"}
             </h2>
             <p className="mt-3 text-sm leading-7 text-slate-600">
               {request.status === "OPEN"

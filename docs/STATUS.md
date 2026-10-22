@@ -16,3 +16,6 @@
 - CP-006 human acceptance, review of the final merge candidate, PR #1 merge to main, successful main CI and required submission are **PENDING**. No submission email has been sent.
 
 **Verdict:** Backend API, hosted database/write workflow and persistence across deployment **PASS**. Final public browser, security/ops, metadata/hours and release merge **PENDING**. See [release checklist](RELEASE_CHECKLIST.md), [CP-006](checkpoints/CP-006-render-release.md), [next step](NEXT_STEP.md).
+
+## New user-requested UI redesign (UNMERGED CANDIDATE)
+After the user rejected the old generic interface, the next design candidate adds adaptive navigation, URL-backed quick filters and search reset, clearer form labels and status progress, and a coordinated visual-token layer. API/database unchanged. **Not yet qualified by CI, deployed, previewed in Figma, or approved by user.** The existing Render service remains the last accepted API deployment. See [CP-007](checkpoints/CP-007-ui-ux-redesign.md) and [UI design handoff](design/UX_REDESIGN_V2.md). Existing release gates remain open.
