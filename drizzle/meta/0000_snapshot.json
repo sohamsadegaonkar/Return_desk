@@ -1,0 +1,443 @@
+{
+  "id": "7ce1ddde-b3bf-4dcc-90cb-47c94140c119",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.request_notes": {
+      "name": "request_notes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "request_notes_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "9223372036854775807",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "request_id": {
+          "name": "request_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "body": {
+          "name": "body",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_request_notes_chronological": {
+          "name": "idx_request_notes_chronological",
+          "columns": [
+            {
+              "expression": "request_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "request_notes_request_id_return_requests_id_fk": {
+          "name": "request_notes_request_id_return_requests_id_fk",
+          "tableFrom": "request_notes",
+          "tableTo": "return_requests",
+          "columnsFrom": [
+            "request_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "request_notes_body_check": {
+          "name": "request_notes_body_check",
+          "value": "length(trim(\"request_notes\".\"body\")) > 0 AND length(\"request_notes\".\"body\") <= 4000"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.return_requests": {
+      "name": "return_requests",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "reference_number": {
+          "name": "reference_number",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "nextval('return_request_ref_seq')"
+        },
+        "reference": {
+          "name": "reference",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": false,
+          "generated": {
+            "as": "'RD-' || lpad(reference_number::text, greatest(6, length(reference_number::text)), '0')",
+            "type": "stored"
+          }
+        },
+        "customer_name": {
+          "name": "customer_name",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customer_email": {
+          "name": "customer_email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "customer_phone": {
+          "name": "customer_phone",
+          "type": "varchar(40)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "order_reference": {
+          "name": "order_reference",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "order_key": {
+          "name": "order_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "generated": {
+            "as": "lower(trim(order_reference))",
+            "type": "stored"
+          }
+        },
+        "item_identifier": {
+          "name": "item_identifier",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "item_key": {
+          "name": "item_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "generated": {
+            "as": "lower(trim(item_identifier))",
+            "type": "stored"
+          }
+        },
+        "item_name": {
+          "name": "item_name",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reason": {
+          "name": "reason",
+          "type": "return_reason",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "return_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'OPEN'"
+        },
+        "resolution": {
+          "name": "resolution",
+          "type": "return_resolution",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refund_amount": {
+          "name": "refund_amount",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "decided_at": {
+          "name": "decided_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "removed_at": {
+          "name": "removed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "one_live_request_per_order_item": {
+          "name": "one_live_request_per_order_item",
+          "columns": [
+            {
+              "expression": "order_key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "item_key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"return_requests\".\"status\" IN ('OPEN', 'IN_REVIEW', 'APPROVED')",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_return_requests_visible_created": {
+          "name": "idx_return_requests_visible_created",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            },
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"return_requests\".\"removed_at\" IS NULL",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_return_requests_visible_status_reason": {
+          "name": "idx_return_requests_visible_status_reason",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "reason",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            },
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"return_requests\".\"removed_at\" IS NULL",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "return_requests_reference_number_unique": {
+          "name": "return_requests_reference_number_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "reference_number"
+          ]
+        },
+        "return_requests_reference_unique": {
+          "name": "return_requests_reference_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "reference"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "chk_non_empty_required_text": {
+          "name": "chk_non_empty_required_text",
+          "value": "length(trim(\"return_requests\".\"customer_name\")) > 0 AND length(trim(\"return_requests\".\"order_reference\")) > 0 AND length(trim(\"return_requests\".\"item_identifier\")) > 0 AND length(trim(\"return_requests\".\"item_name\")) > 0"
+        },
+        "chk_customer_contact_present": {
+          "name": "chk_customer_contact_present",
+          "value": "(\"return_requests\".\"customer_email\" IS NOT NULL AND length(trim(\"return_requests\".\"customer_email\")) > 0) OR (\"return_requests\".\"customer_phone\" IS NOT NULL AND length(trim(\"return_requests\".\"customer_phone\")) > 0)"
+        },
+        "chk_positive_quantity": {
+          "name": "chk_positive_quantity",
+          "value": "\"return_requests\".\"quantity\" > 0"
+        },
+        "chk_positive_version": {
+          "name": "chk_positive_version",
+          "value": "\"return_requests\".\"version\" >= 1"
+        },
+        "chk_resolution_by_status": {
+          "name": "chk_resolution_by_status",
+          "value": "(\"return_requests\".\"status\" IN ('OPEN', 'IN_REVIEW', 'REJECTED') AND \"return_requests\".\"resolution\" IS NULL AND \"return_requests\".\"refund_amount\" IS NULL) OR (\"return_requests\".\"status\" IN ('APPROVED', 'COMPLETED') AND \"return_requests\".\"resolution\" IS NOT NULL)"
+        },
+        "chk_refund_amount_by_resolution": {
+          "name": "chk_refund_amount_by_resolution",
+          "value": "(\"return_requests\".\"resolution\" = 'REFUND' AND \"return_requests\".\"refund_amount\" IS NOT NULL AND \"return_requests\".\"refund_amount\" > 0 AND \"return_requests\".\"refund_amount\" <= 9999999999.99) OR (\"return_requests\".\"resolution\" IS DISTINCT FROM 'REFUND' AND \"return_requests\".\"refund_amount\" IS NULL)"
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.return_reason": {
+      "name": "return_reason",
+      "schema": "public",
+      "values": [
+        "DAMAGED",
+        "WRONG_ITEM",
+        "SIZE_ISSUE",
+        "NOT_AS_DESCRIBED",
+        "CHANGED_MIND"
+      ]
+    },
+    "public.return_resolution": {
+      "name": "return_resolution",
+      "schema": "public",
+      "values": [
+        "REFUND",
+        "REPLACEMENT",
+        "STORE_CREDIT"
+      ]
+    },
+    "public.return_status": {
+      "name": "return_status",
+      "schema": "public",
+      "values": [
+        "OPEN",
+        "IN_REVIEW",
+        "APPROVED",
+        "REJECTED",
+        "COMPLETED"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {
+    "public.return_request_ref_seq": {
+      "name": "return_request_ref_seq",
+      "schema": "public",
+      "increment": "1",
+      "startWith": "1001",
+      "minValue": "1",
+      "maxValue": "9223372036854775807",
+      "cache": "1",
+      "cycle": false
+    }
+  },
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
