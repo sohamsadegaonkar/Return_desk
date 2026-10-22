@@ -1358,3 +1358,8 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* Form labels must preserve exact accessible names; requirements sit beside them. */
+.field-label-row { display:flex; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+.field-label-row .field-label { margin-bottom:0; }
+.field-label-row .field-required { margin-left:0; }

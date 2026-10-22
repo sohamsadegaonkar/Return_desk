@@ -162,9 +162,9 @@ test("v2 workspace quick filters, search reset and navigation work responsively"
   await page.getByRole("button",{name:"Clear search"}).click();
   await expect(page.getByLabel("Search requests")).toHaveValue("");
   await expect(page).not.toHaveURL(/[?&]q=/);
-  await page.getByRole("link", {name: "New request", exact: true}).click();
+  await page.getByRole("navigation",{name:"Primary navigation"}).getByRole("link", {name:"New request",exact:true}).click();
   await expect(page.getByRole("heading",{name:"New return request"})).toBeVisible();
-  await expect(page.getByRole("link", {name:"New request",exact:true})).toHaveAttribute("aria-current","page");
+  await expect(page.getByRole("navigation",{name:"Primary navigation"}).getByRole("link", {name:"New request",exact:true})).toHaveAttribute("aria-current","page");
   await noHorizontalOverflow(page);
 });
 

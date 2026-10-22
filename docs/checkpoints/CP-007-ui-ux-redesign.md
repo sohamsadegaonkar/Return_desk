@@ -16,3 +16,6 @@ Fresh source research and Figma frame/component handoff: [UI v2 design system](.
 
 ## Next step
 Review the exact candidate diff, open PR to integration/foundation, verify full CI and screenshot behavior, address defects, obtain user's UI approval, then merge/redeploy and re-verify actual hosted responsive UX before final PR #1. Deadline remains 23 October 2026 11:00 IST.
+
+## First CI failure and reviewed correction
+[PR #9 initial CI 39868193926](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39868193926): lint, typecheck, domain/unit, offline smoke, isolated migration/DB checks and production build PASSED. Browser verification FAILED: 10 passed, six failed (three scenarios on desktop and 375px). Two defects identified directly from job logs: putting Required markup inside the original label changed exact field-label matching on create/edit; test navigation had two legitimately accessible New request links and used an ambiguous locator. Corrected by moving Required badges beside labels without changing form field names or validation, and by scoping the new Playwright locator to Primary navigation. Responsive badge row CSS added. No browser checks removed or weakened; new exact-head CI must now pass before review can continue. Candidate remains unmerged/unreleased.

@@ -26,12 +26,12 @@ export function RequestFields({
     hint?: string,
   ) => (
     <div className={name === "itemName" ? "sm:col-span-2" : ""}>
-      <label className="field-label" htmlFor={name}>
-        {label}
+      <div className="field-label-row">
+        <label className="field-label" htmlFor={name}>{label}</label>
         {["customerName", "orderReference", "itemIdentifier", "itemName", "quantity"].includes(name) && (
           <span aria-hidden="true" className="field-required">Required</span>
         )}
-      </label>
+      </div>
       <input
         id={name}
         name={name}
@@ -80,9 +80,10 @@ export function RequestFields({
           {input("itemName", "Item name", "text", 200)}
           {input("quantity", "Quantity", "number")}
           <div>
-            <label className="field-label" htmlFor="reason">
-              Reason for return <span aria-hidden="true" className="field-required">Required</span>
-            </label>
+            <div className="field-label-row">
+              <label className="field-label" htmlFor="reason">Reason for return</label>
+              <span aria-hidden="true" className="field-required">Required</span>
+            </div>
             <select
               id="reason"
               className="input"
