@@ -1,15 +1,10 @@
-# Next working step — verify integrated runtime
+# Next working step — integrated verification and public demo
 
-Predecessor: reviewed CP-000 plus CP-001 integrated source, component handoffs and local checks. The verified domain/client and build outputs support the runtime candidate; they do not prove PostgreSQL/API/browser workflows.
+Predecessor: QA revision `a1ec583` full-suite CI [39834751867](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39834751867) PASS; PR #2 reviewed and merged as integration SHA `89f11b5f1eb1221c8c11fec69d59cf4014feec07`. User acknowledgment remains PENDING.
 
-## Immediate gate
-CI 39830254331 on 0c9be124 failed its HTTP stage: PostgreSQL status parameter inferred as both text and return_status. Fix explicit enum casts, review independently, then publish and observe the new head. Migration/seed/23 database assertions passed; browser stage was not reached.
-1. Review final exact source/docs/workflow diff and lockfile provenance; publish the reviewed integration branch candidate. Keep PR draft while real runtime results remain unknown.
-2. Observe GitHub Actions on that exact remote head. It must run real PostgreSQL 16 migration twice, safe 36-row/6-note seed and explicit repeated-seed refusal, database invariants, 57 direct-HTTP cases and 12 browser scenarios. Inspect concrete failures; fix owners' paths through reviewed commits, then rerun affected checks. Missing/blocked execution is not PASS.
-3. Record exact CI command/results/revision in CP-001, STATUS and this next-step file. Only actual runtime success can accept CP-001 and the API/UI checkpoints.
-4. Provision an authorized hosting account and hosted PostgreSQL; run migrations and synthetic seed once, deploy the reviewed code, verify persistence after app restart and externally smoke-test the public URL. Keep deployment credentials out of Git. If account access is missing, prepare the exact handoff and record the blocker.
-5. Freeze features, update README with observed live URL, outstanding work and author's actual hours, and review submission links before the user sends the assignment reply. Deadline: 23 October 2026, 11:00 AM Asia/Kolkata.
+1. Check exact integration [CI 39836989603](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39836989603); record observed pass/fail and exact SHA. Do not merge [draft PR #1](https://github.com/sohamsadegaonkar/Return_desk/pull/1) to main based solely on the QA-branch result.
+2. Free Render PostgreSQL 16 and free Node web service are created in Singapore, but not connected. In the Render dashboard set web-service DATABASE_URL to the database's internal connection URL **without sharing or committing it**. From an authorized trusted CLI, with the provider's external connection URL and TLS requirements, run `npm ci`, `npm run db:migrate`, then deliberate `npm run db:seed` only for the empty demo DB outside NODE_ENV=production. Verify 36 visible requests/six notes. Free instances have no shell or pre-deploy command: migrations stay a separate release step rather than running during build or HTTP.
+3. Inspect service startup and run actual public HTTP/browser smoke: create/queue/filters/status/resolution/edit/note/remove, 375px responsiveness and restart persistence. AutoDeploy OFF; trigger reviewed redeploy only when necessary. The reserved URL is NOT yet a qualified submission link.
+4. Finish CP-002–006 evidence, release checklist, actual author hours and externally verified README links; review exact candidate before pushes and keep PR #1 draft if anything fails. Submission deadline 23 October 2026 at 11:00 IST.
 
-## Research and ownership
-Freshly recheck primary official docs for any actual CI/deployment failure before changing architecture. RESEARCH_LOG and per-engineer Markdown records preserve inspected paper sections and limitations. Do not substitute skills for fresh evidence or loosen assignment rules to make tests pass.
-Four-agent isolated ownership is recorded in TEAM_PLAN; component tasks are finished, integration/review is serial. Assign a focused fix back to its owner if runtime finds a defect. Reestablish ownership before another parallel slice. Every change must be reviewed before push; every successful/acknowledged checkpoint records the next action and actual acknowledgment separately.
+Four engineer workstreams are historical and completed, not background agents currently running. See [deployment handoff](engineers/deployment.md), [research](RESEARCH_LOG.md), and [team plan](TEAM_PLAN.md).

@@ -4,7 +4,7 @@ A focused returns workspace for customer-care teams. Built from create-next-app 
 
 ## Current state
 
-Domain contracts, PostgreSQL migration/seed, business-rule APIs and the workspace UI are being integrated on `integration/foundation` ([draft PR](https://github.com/sohamsadegaonkar/Return_desk/pull/1)). The main branch is not the implementation candidate yet. Local unit/build checks and remaining runtime gates are recorded in [STATUS](docs/STATUS.md). Do not treat authored integration tests as passed tests. No public deployment exists yet.
+The domain, PostgreSQL migration/seed, APIs and responsive UI are integrated on `integration/foundation` ([draft PR](https://github.com/sohamsadegaonkar/Return_desk/pull/1)); main is not yet release-qualified. QA head `a1ec583` passed [CI 39834751867](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39834751867) with 106 unit/client, 23 database, 57 HTTP and all 12 browser scenarios. PR #2 merged at `89f11b5`; the integrated SHA has a separate CI gate. Render deployed a web server, but database-backed workflows are not yet configured/verified. See [STATUS](docs/STATUS.md).
 
 ## Setup from a clean checkout
 
@@ -62,7 +62,7 @@ See [architecture](docs/architecture.md), [API contract](docs/API_CONTRACT.md), 
 
 ## Delivery and remaining work
 
-Public application URL: **pending**. Deployment account/database provisioning and external smoke verification remain required. Local PostgreSQL process launch and Chromium installation are blocked by the current execution environment; real results must come from the CI/deployment environment rather than mocks. Dependency maintenance: compatible Next lint plugins currently require deprecated ESLint 9; this is recorded, not hidden.
+Reserved Render URL: https://returndesk-submission-demo.onrender.com — deploy reports LIVE, but **this is not yet a verified working application or submission link**. Free PostgreSQL and Node resources exist in Singapore; DATABASE_URL, committed schema migration/seed, restart persistence and external smoke remain outstanding. See [deployment handoff](docs/engineers/deployment.md). Local PostgreSQL process launch and Chromium installation are blocked by the current execution environment; real results must come from the CI/deployment environment rather than mocks. Dependency maintenance: compatible Next lint plugins currently require deprecated ESLint 9; this is recorded, not hidden.
 
 Optional event timeline and idempotency keys are deferred until the required workflow is verified. Actual hours spent by the author: **not yet supplied**; update before submission rather than inventing a figure. User-confirmed submission deadline: 23 October 2026, 11:00 AM Asia/Kolkata.
 
