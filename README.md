@@ -62,11 +62,24 @@ Queue search, status/reason filters, sorting and pagination are combined in SQL;
 
 See [architecture](docs/architecture.md), [API contract](docs/API_CONTRACT.md), [data model](docs/DATA_MODEL.md), and [test plan](docs/TEST_PLAN.md) for the detailed contracts.
 
+
+### Opt-in public demo smoke (synthetic-only)
+
+The source-controlled `scripts/public-smoke.mjs` harness is exercised **offline** on every CI run with `npm run test:smoke-harness`; this never contacts Render. Live writes are deliberately **not** part of routine CI. When the demo already shows at least 36 synthetic seed records and the operator explicitly accepts adding two synthetic records (one Completed visible and one soft-removed), run from a trusted checkout:
+
+```sh
+RETURNDESK_LIVE_TEST=YES npm run test:live:run
+```
+
+The harness tests create → edit → In Review → Approved (recorded synthetic refund, no payment) → Completed, append-only note, search/status filter, forbidden edit and Open soft removal. It stores a synthetic record identifier under `/tmp/returndesk-public-smoke-state.json` without secrets. **After actually restarting the Render web service**, run `npm run test:live:verify` to check that state survived. The verification command alone does not prove a restart happened; it requires a genuine restart between modes. Do not rerun live writes casually, and do not use real customer data. The seeded 36 records are never mutated.
+
+**New hosted evidence (user-provided Codespaces output):** GET public list HTTP 200, `pagination.total=36`, 36 rows, and fixed seeded record detail HTTP 200 with one note. This confirms **public read-only** operation, not the live-write or restart-persistence gates.
+
 ## Delivery and remaining work
 
 **Public GitHub repository:** https://github.com/sohamsadegaonkar/Return_desk (source candidate on `integration/foundation`; `main` is not yet updated).
 
-**Reserved Render URL:** https://returndesk-submission-demo.onrender.com . Render reports that its web process deployed successfully, but **this link is not yet accepted as a functional submission demo**. The connected tools cannot read the stored Render `DATABASE_URL` value, and public requests from this execution environment could not resolve/reach the hostname. User reported setting the environment variable; actual database connectivity, migrations, 36-row seed, end-to-end hosted workflows and restart persistence are **not yet verified**.
+**Reserved Render URL:** https://returndesk-submission-demo.onrender.com . Render reports that its web process deployed successfully, but **this link is not yet accepted as a functional submission demo**. The connected tools cannot read the stored Render `DATABASE_URL` value. The user verified the external PostgreSQL connection, applied migrations, seeded the synthetic database, and confirmed public list/detail GET responses from Codespaces (HTTP 200, 36 visible, one note on the checked seed record). **Live writes, full note totals, user journeys, and restart persistence remain unverified.**
 
 **Host configuration:** Free PostgreSQL16 and a Free Node web service are created in Singapore. On Render, use the internal Postgres URL for the web-service `DATABASE_URL`, without posting credentials in Git/chat. From a trusted CLI use the provider's external URL, narrow IP allowlisting and required TLS to run committed `npm run db:migrate` and then `npm run db:seed` once on the designated empty synthetic-demo database (with `NODE_ENV` not `production`). Do not run migration/seed during build, app startup or public requests. See [deployment handoff](docs/engineers/deployment.md). Free Render Postgres expires **21 November 2026 UTC** and has no backups; this is a temporary demo, not production storage.
 

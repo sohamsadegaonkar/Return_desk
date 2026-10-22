@@ -40,6 +40,10 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      - name: Offline public smoke harness tests (never contact Render)
+        run: |
+          node --check scripts/public-smoke.mjs
+          npm run test:smoke-harness
       - name: Migrate isolated databases and verify safe seed
         shell: bash
         run: |
