@@ -85,7 +85,7 @@ export class RequestService {
     return this.transaction(async (client) => {
       const row = await this.visible(client, id);
       const notes = await client.query<NoteRow>(`SELECT ${noteColumns} FROM request_notes
-        WHERE request_id = $1 ORDER BY created_at ASC, id ASC`, [id]);
+        WHERE request_id = $1 ORDER BY request_notes.created_at ASC, request_notes.id ASC`, [id]);
       return { ...requestDTO(row), notes: notes.rows.map(noteDTO) };
     }, true);
   }
