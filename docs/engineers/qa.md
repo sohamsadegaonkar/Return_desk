@@ -51,3 +51,15 @@ The parent’s production HTTP diagnostic showed Next16.4.2 removes a `__proto__
 
 ## Success screenshot evidence
 The existing queue scenario now captures `test-results/queue-desktop.png` and `test-results/queue-mobile-375.png` after a real searched record becomes visible and the no-horizontal-overflow assertion passes, before navigating to detail. These full-page screenshots support actual visual review through CI artifacts without adding or weakening a test case. Source change self-reviewed; no successful browser run or screenshot artifact is claimed until CI executes the scenario.
+
+## 23 October 2026 — exact-head Playwright alert-locator repair
+
+Predecessor: `integration/foundation` at `58d024f91f06bf3007f78f89472b36258afb377d` (draft PR #1). Actual GitHub Actions run [39831149037](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39831149037), job 120007303383, completed with a failed browser gate. The run passed install, lint, typecheck, 106 domain/client tests, PostgreSQL 16 migrations/seed/23 direct database assertions, production build, browser install and all 57 real HTTP tests. Ten of twelve Playwright executions passed. The two desktop/mobile failures are the same locator strictness error, not yet evidence of a failed product path: `page.getByRole("alert")` matched both the visible application's `ErrorBox` and Next's empty `__next-route-announcer__`.
+
+Assigned fix scope: one assertion in `tests/e2e/workspace.spec.ts`, with no product/API/schema or acceptance-behaviour change. Scope the role=alert locator with the existing user-visible error heading `That action could not be completed`; independently assert the not-found/removed message, the absence of the removed request heading and the absence of edit/start-review controls. Do not use `.first()` to hide an ambiguous selector, skip a test or relax a required result.
+
+Fresh official guidance consulted: https://playwright.dev/docs/locators (Strictness and Chaining filters); https://playwright.dev/docs/best-practices (user-facing locators and filtering); https://playwright.dev/docs/test-assertions (auto-retrying toContainText assertions). Technical decision is limited to selector uniqueness; no new research performance claim or feature-scope change.
+
+Pre-publication review: exact source change inspected against failing CI log, actual `ErrorBox` heading, existing scenario and framework role-announcer collision; all other test assertions remain untouched. Runtime acceptance: **PENDING a new exact-head PostgreSQL+HTTP+desktop/mobile Playwright CI run**. Previous green checks are evidence only for `58d024f91f06bf3007f78f89472b36258afb377d`, not for a new head. User acknowledgment: PENDING; no acknowledgment inferred.
+
+Next dependent step: publish this self-reviewed QA fix as a separate PR targeting `integration/foundation`; observe its actual CI. If both browser variants pass, integrator reviews PR diff, merges without overwriting other work, reruns the integrated exact-head gate and updates CP-001/STATUS/NEXT_STEP/RESEARCH_LOG. If CI fails, diagnose and fix the specific observed failure without masking acceptance criteria.

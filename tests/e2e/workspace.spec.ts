@@ -121,7 +121,7 @@ test("external removal clears cached details and actions after a refusal", async
   expect(removed.status()).toBe(204);
   await page.getByLabel("Add a note", {exact: true}).fill("Unsaved after external removal");
   await page.getByRole("button", {name: "Add note", exact: true}).click();
-  await expect(page.getByRole("alert")).toContainText(/not found|removed/);
+  await expect(page.getByRole("alert").filter({hasText: "That action could not be completed"})).toContainText(/not found|removed/);
   await expect(page.getByRole("heading", {name: row.reference, exact: true})).toHaveCount(0);
   await expect(page.getByRole("button", {name: "Edit details", exact: true})).toHaveCount(0);
   await expect(page.getByRole("button", {name: "Start review", exact: true})).toHaveCount(0);
