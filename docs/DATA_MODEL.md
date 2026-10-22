@@ -1,6 +1,6 @@
 # Database and migration plan
 
-Canonical SQL blueprint: architecture.md section 5; it is not yet an executed migration.
+Canonical SQL blueprint: architecture.md section 5; committed SQL/Drizzle schema and clean-only seed are implemented. Real PostgreSQL migration execution is pending.
 PostgreSQL 16 target; Drizzle schema must match committed migration including generated columns, indexes and triggers.
 Tables: return_requests and request_notes. request_events is optional after all required gates.
 

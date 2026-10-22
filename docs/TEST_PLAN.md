@@ -1,6 +1,6 @@
 # Verification plan
 
-Status: all application tests NOT RUN. Independent expected results come from REQUIREMENTS.md and assignment rules, never from the implementation policy under test.
+Status: 106 domain/client unit tests passed locally; 57 real-HTTP cases and 12 browser scenarios authored, runtime execution pending CI. Independent expected results come from REQUIREMENTS.md and assignment rules, never from the implementation policy under test.
 Use Vitest plus real isolated PostgreSQL, direct HTTP Route Handler tests and Playwright. Do not use mock DB success as constraint evidence.
 
 ## Required cases

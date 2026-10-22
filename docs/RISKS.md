@@ -3,8 +3,8 @@
 | Risk | Current state | Response |
 |---|---|---|
 | Deadline 23 October 2026, 11:00 AM IST | User confirmed | Target 10:00 AM feature freeze; prioritize mandatory gates |
-| No runnable app yet | Known | Begin foundation after reviewed docs |
-| Runtime/package/hosting compatibility | Unverified | CP-001 fresh official-source check and real build/connection test |
+| Real runtime qualification pending | Source/build implemented | Observe real PG/HTTP/browser CI before acceptance |
+| Hosting/PG runtime compatibility | Build passed, database gates pending | Exact-head PostgreSQL16 CI and deployment smoke |
 | Deployment credentials/account access | Unverified | Identify blocker without committing secrets; continue local authorized work |
 | Removed Open permanently blocks same item | Accepted literal interpretation | Explicit UI warning and README assumption |
 | Duplicate note/create after lost response | Known limitation | No blind retries; idempotency deferred |

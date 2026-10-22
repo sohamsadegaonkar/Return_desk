@@ -4,7 +4,7 @@ import { Loading, Shell } from "@/components/ui";
 
 async function RequestContent({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return <RequestWorkspace id={id} />;
+  return <RequestWorkspace key={id} id={id} />;
 }
 
 export default function RequestPage({

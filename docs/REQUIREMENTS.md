@@ -1,6 +1,6 @@
 # Requirement traceability
 
-All implementation verification is NOT RUN. IDs below are stable test/review references.
+Local domain/client suite: 106 tests passed. Real PostgreSQL, HTTP workflow and browser acceptance remain pending the isolated CI gate. IDs below are stable test/review references.
 | ID | Requirement | Verification target |
 |---|---|---|
 | STACK-01 | App Router + React, Node backend, PostgreSQL, Tailwind | Dependency/build/runtime review |

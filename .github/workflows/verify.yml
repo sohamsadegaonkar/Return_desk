@@ -1,0 +1,96 @@
+name: Verify ReturnDesk
+on:
+  push:
+    branches: [main, integration/foundation]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: returndesk_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/returndesk_test
+      DEMO_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/returndesk_seed
+      ALLOW_TEST_WRITES: '1'
+      TEST_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24.19.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Migrate isolated databases and verify safe seed
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import pg from 'pg';
+          const client = new pg.Client({connectionString: process.env.TEST_DATABASE_URL});
+          await client.connect();
+          await client.query('CREATE DATABASE returndesk_seed');
+          await client.end();
+          NODE
+          DATABASE_URL="$TEST_DATABASE_URL" npm run db:migrate
+          DATABASE_URL="$TEST_DATABASE_URL" npm run db:migrate
+          DATABASE_URL="$DEMO_DATABASE_URL" npm run db:migrate
+          DATABASE_URL="$DEMO_DATABASE_URL" npm run db:seed
+          if DATABASE_URL="$DEMO_DATABASE_URL" npm run db:seed > /tmp/returndesk-repeat-seed.log 2>&1; then
+            echo 'Repeated seed unexpectedly succeeded'
+            exit 1
+          fi
+          cat /tmp/returndesk-repeat-seed.log
+          grep -q 'Seed refused: request data already exists' /tmp/returndesk-repeat-seed.log
+          node --input-type=module <<'NODE'
+          import pg from 'pg';
+          const client = new pg.Client({connectionString: process.env.DEMO_DATABASE_URL});
+          await client.connect();
+          const {rows:[r]} = await client.query('SELECT count(*)::int AS total, count(*) FILTER (WHERE removed_at IS NULL)::int AS visible FROM return_requests');
+          const {rows:[n]} = await client.query('SELECT count(*)::int AS count FROM request_notes');
+          if (r.total !== 36 || r.visible !== 36 || n.count !== 6) throw new Error('Expected exactly 36 total/visible seed requests and six notes');
+          await client.end();
+          NODE
+      - run: npm run db:check
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: HTTP and browser verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          DATABASE_URL="$TEST_DATABASE_URL" npm start -- --hostname 127.0.0.1 > /tmp/returndesk-next.log 2>&1 &
+          app_pid=$!
+          trap 'kill "$app_pid" 2>/dev/null || true' EXIT
+          ready=0
+          for attempt in $(seq 1 40); do
+            if curl --fail --silent "$TEST_BASE_URL/api/requests" > /dev/null; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then
+            cat /tmp/returndesk-next.log
+            exit 1
+          fi
+          npm run test:api
+          npm run test:e2e
