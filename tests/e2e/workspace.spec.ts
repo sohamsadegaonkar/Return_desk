@@ -76,6 +76,7 @@ test("approval fields clear on resolution changes and only legal actions remain"
   await expect(page.getByRole("button", {name: "Start review", exact: true})).toHaveCount(0);
   await page.getByRole("button", {name: "Approve request", exact: true}).click();
   const dialog = page.getByRole("dialog");
+  await expect(dialog).toHaveAccessibleName("Approve this request");
   await dialog.getByLabel("Refund amount (INR)", {exact: true}).fill("1499.50");
   await dialog.getByLabel("Resolution", {exact: true}).selectOption("REPLACEMENT");
   await expect(dialog.getByLabel("Refund amount (INR)", {exact: true})).toHaveCount(0);

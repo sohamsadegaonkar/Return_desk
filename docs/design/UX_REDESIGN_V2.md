@@ -34,11 +34,11 @@ Controls are actual navigation links, status filters, pagination or existing API
 | target-primary | 44–48px | touch/keyboard targets |
 | font | system UI/Segoe UI/Inter fallback | no third-party font request |
 
-## Figma frame plan after connecting Figma
+## Figma frame plan once an editable file is available
 - Queue desktop (1440×900): 246px dark navigation rail, utility bar, status chips, searchable/filterable records table, visible row actions.
-- Queue mobile (375×812): compact brand/two navigation destinations, scrollable status chips, full-width search, two-column dropdowns, clickable request cards.
+- Queue mobile (375×812): compact brand/two navigation destinations, all six status chips wrapping without sideways scrolling, full-width search, two-column dropdowns, clickable request cards.
 - Create request (desktop 1440 and mobile 375): clear heading, customer contact and order/item sections, status hint, active Cancel/Create actions.
-- Request detail (desktop and mobile): reference/status header, progress strip, decision panel, info and note cards, confirmation modal.
+- Request detail (desktop and mobile): reference/status header, progress strip, decision panel, info and note cards, confirmation modal. On mobile, the decision panel precedes the notes composer in visual and DOM order.
 - State variants: empty/filtered, loading, API error, validation, stale conflict, uncertain response, terminal state, keyboard focus and long text.
 - Components: SidebarLink, Button, StatusPill, QuickFilter, TextInput, Select, Textarea, QueueRow, RequestCard, ProgressStep, Dialog and FeedbackBanner with functional/disabled/loading/error variants.
 
@@ -49,4 +49,6 @@ Controls are actual navigation links, status filters, pagination or existing API
 - Do not claim an editable Figma artifact until connected and actually authored.
 
 ## Latest browser evidence and Figma boundary
-[UI source run 39870760077](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39870760077) **PASS**, six full-page screenshots from isolated desktop/375px Playwright. Latest mobile screens make all six statuses visible without scrolling and place the contextual decision CTA before notes in logical DOM order. These screenshots serve as the current implementation reference, not an editable design-system component library. Figma account access was confirmed with two available workspaces; **new-file creation is awaiting owner workspace selection**. No live user testing or Figma review has happened yet.
+Exact candidate `455accfbd2385d315dc567d87aa0d16954056fae` passed [CI 39888722084](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39888722084), all 19 workflow steps: 106 unit/client tests, 57 HTTP cases, 23 PostgreSQL assertions and 16 desktop/375px browser project scenarios. The run retains six full-page queue/create/detail screenshots from isolated Playwright. The previously inspected [28a25ce screenshots](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39870760077) established the corrected search icon, all six mobile statuses without sideways scrolling and contextual decision CTA before notes in logical DOM order. This documentation-only successor retains that UI; the latest screenshots are not claimed as a new independent visual acceptance review. Screenshots are implementation evidence, not an editable component library or hosted acceptance.
+
+The owner selected **XFactor**. The Figma account lookup reports its role as **admin** and seat as **View**; creating a Design file with the returned workspace key failed with **INVALID_ARGUMENT / Invalid planKey**. A subsequent lookup still reports View. This does not establish the cause of the provider error. **No editable Figma file was created.** The next authoring dependency is confirmation of editor access or an already-editable Figma Design file link in the selected workspace, rather than workspace selection. Do not switch workspace or claim an authored canvas without evidence. User visual approval, editable Figma review and live hosted UI v2 acceptance remain pending; PR #9 is draft/unmerged and Render still shows the earlier UI.

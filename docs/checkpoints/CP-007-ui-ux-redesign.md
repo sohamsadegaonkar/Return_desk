@@ -1,5 +1,7 @@
 # CP-007 — Research-grounded UI/UX redesign v2
 
+**Current successor:** [CP-008](CP-008-ui-review-accessibility.md) consolidates four parallel reviews at exact `455accf` and fixes two accessibility findings. Earlier pending entries below are historical. XFactor selection is complete; editable Design creation remains blocked by the recorded error. No owner approval, merge or deployment occurred.
+
 **State:** CANDIDATE, UNMERGED. **Date:** 23 October 2026, IST. **Dependency:** CP-006 hosted API/write and cross-deployment persistence PASS, followed by explicit user rejection of the generic UI. **Human acceptance:** PENDING.
 
 ## Changes for review
