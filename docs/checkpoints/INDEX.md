@@ -12,8 +12,8 @@ CP-002–005 retain historical isolated-CI qualification on reviewed source `d01
 | CP-005 | [Workspace/recovery](CP-005-workspace-recovery.md) | Isolated CI PASS; live hosted desktop/375px browser acceptance pending |
 | CP-006 | [Render deployment/submission](CP-006-render-release.md) | PARTIAL: hosted API/DB/persistence PASS; final browser, security/ops, metadata/hours and release gates pending |
 | CP-007 | [UI/UX redesign v2](CP-007-ui-ux-redesign.md) | UNMERGED CANDIDATE: exact `455accf` CI PASS; editable Figma, user visual approval and hosted redesign acceptance pending |
-| CP-008 | [Parallel review/accessibility](CP-008-ui-review-accessibility.md) | Four reviews integrated; local checks PASS; new exact-head CI and owner approval pending |
+| CP-008 | [Parallel review/accessibility](CP-008-ui-review-accessibility.md) | Four reviews integrated; 28afb979 source CI/refreshed images PASS; owner/Figma/hosted approval pending |
 
-Latest UI candidate: `455accfbd2385d315dc567d87aa0d16954056fae`, [CI 39888722084](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39888722084) **PASS** with 106 unit/client, 57 HTTP, 23 PostgreSQL assertions and 16 desktop/375px browser project scenarios. These are isolated tests; public Render still shows the earlier UI. PR #9 and release PR #1 remain draft/unmerged.
+UI predecessor: `455accfbd2385d315dc567d87aa0d16954056fae`, [CI 39888722084](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39888722084) **PASS** with 106 unit/client, 57 HTTP, 23 PostgreSQL assertions and 16 desktop/375px browser project scenarios. These are isolated tests; public Render still shows the earlier UI. PR #9 and release PR #1 remain draft/unmerged.
 
 User acknowledgment remains PENDING. [Checkpoint template](../templates/CHECKPOINT_TEMPLATE.md). [Current status](../STATUS.md). [Next dependent step](../NEXT_STEP.md).

@@ -8,7 +8,7 @@
 | Integration | `b52256872cc7026d11ccc1884763d8ff8b6eba64`; PR #1 → main draft/unmerged. |
 | Hosted Render | Recorded Live deploy `dep-dbd8k9brjlhs73ccuuc0`, source `83873e98d87ad432d91b26877a346fd73bbe1b1d`. Public GET confirms the earlier UI. |
 | UI v2 predecessor | `455accfbd2385d315dc567d87aa0d16954056fae`; PR #9 draft/unmerged. [CI 39888722084](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39888722084) PASS, all 19 steps. |
-| Current follow-up | [CP-008](checkpoints/CP-008-ui-review-accessibility.md): four parallel scope reviews, accessible dialog names, darker progress/placeholder text, six-screen evidence and reconciled docs. Integrated local lint/typecheck/build/106 unit tests PASS. Publication/exact-head CI tracked separately. |
+| Current follow-up | [CP-008](checkpoints/CP-008-ui-review-accessibility.md): four parallel scope reviews, accessible dialog names, darker progress/placeholder text, six-screen evidence and reconciled docs. Integrated local lint/typecheck/build/106 unit tests PASS. Source 28afb979 [CI 39895331140](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39895331140) PASS, all 19 steps; refreshed six-screen review completed. |
 
 ## Passed evidence and scope
 
@@ -19,7 +19,7 @@
 
 ## Open gates
 
-- CP-008 exact-head CI/refreshed screenshot inspection and actual owner UI approval.
+- CP-008 source qualification PASS at 28afb979; actual owner UI approval remains PENDING. Receipt-only successor preserves app/test/config bytes; its exact-head CI is tracked separately.
 - Editable Figma destination: XFactor selected; Design creation failed `INVALID_ARGUMENT / Invalid planKey`. Lookup reports admin/View seat; no cause established. Need editable Design URL or corrected access; no canvas created.
 - Hosted desktop/375px visual/keyboard acceptance after approved UI deployment. Current URL: https://returndesk-submission-demo.onrender.com
 - Existing security/ops checks: history/content secret scan, dependency/advisory review and temporary Render PostgreSQL external-client IP cleanup. Intentionally unauthenticated demo remains synthetic-only; no payment execution.

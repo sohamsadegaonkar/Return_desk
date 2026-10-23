@@ -1,6 +1,6 @@
 # CP-008 — Parallel review and bounded UI accessibility corrections
 
-**Date:** 23 October 2026, IST. **State:** reviewed local candidate; exact published-head CI pending. **Dependency:** CP-006 hosted API/persistence → CP-007 UI v2 `455accfbd2385d315dc567d87aa0d16954056fae`. **Requirements:** UI-01, UI-02, SUB-01–03. **Human acknowledgment:** PENDING.
+**Date:** 23 October 2026, IST. **State:** published source-qualified candidate; owner/Figma/hosted acceptance pending. **Dependency:** CP-006 hosted API/persistence → CP-007 UI v2 `455accfbd2385d315dc567d87aa0d16954056fae`. **Requirements:** UI-01, UI-02, SUB-01–03. **Human acknowledgment:** PENDING.
 
 ## Acceptance and changes
 
@@ -25,3 +25,13 @@ Fresh W3C WCAG 2.2 contrast/APG naming guidance and TDDev abstract inspected; in
 ## Next dependent step and acknowledgment
 
 Verify published exact head/CI and refreshed screenshots; present Queue/Create/Detail at both widths for owner feedback. Resolve editable Figma destination, then planned visual/design approval before UI integration/deployment. Hosted responsive/keyboard and remaining CP-006 release checks follow approved deployment without reseeding. Every successful checkpoint updates Markdown evidence and the next action; every acknowledgment records actual person/scope/time. **Owner acknowledgment remains PENDING.**
+
+## Publication and exact-source qualification receipt
+
+Published reviewed tree **84c7289b965289fe82328eb4adfd859ff6a1642f** as **28afb979491956716d08992f001771a7062fdd8b**, draft [PR #10](https://github.com/sohamsadegaonkar/Return_desk/pull/10) targeting the UI branch. Fetched remote head/tree match exactly. [CI 39895331140](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39895331140) completed SUCCESS: all 19 steps, 106 unit/client, 57 HTTP, 23 PostgreSQL invariants, 16 browser project scenarios and 4 offline smoke. Logs inspected; new dialog-name assertion passed on both browser projects. This supersedes pending entries above for that exact source only.
+
+Root downloaded/verified artifact 12476094254 digest **a9e4f1b8148d74a32590eeb42dd53dd1c65f39afa153b66c480c2340fe9687a2** and inspected all six refreshed PNGs. [Current visual review set](../design/UI_V2_VISUAL_REVIEW.md#qualified-accessibility-follow-up--current-review-set) retains them unchanged. No major visual regression found in those samples; not all-state/hosted/screen-reader acceptance. Updated stale PR #9/#1 descriptions after self-review; no merge or deployment.
+
+This receipt/evidence follow-up changes documentation and PNGs only; application/test/config bytes remain identical to qualified 28afb979. Review final receipt diff and links before push, verify remote head and applicable CI afterward. User acknowledgment remains PENDING. Next dependent step is actual owner visual feedback plus resolving the editable Figma destination, then approved integration/deployment and hosted acceptance; no reseed.
+
+Receipt pre-push review: root exact-diff self-review PASS; separate documentation reviewer independently verified provider source/run/artifact identity, all six PNG byte/hash matches, 62 relative links/anchors and unchanged application/test/config/workflow tree: PASS, no blockers. Minor index label clarified to “UI predecessor” and self-reviewed. No new architecture or research decision in this evidence-only receipt.

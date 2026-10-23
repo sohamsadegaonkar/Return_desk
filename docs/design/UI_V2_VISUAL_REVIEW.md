@@ -30,3 +30,26 @@ Root and independent UX reviewer inspected all six. No major visual blocker esta
 | queue-mobile-375.png | 038d1bce38b29faf60c2e64485d7cbcd304003e68dd12374744fbc4b3d4dffec |
 
 **Owner acknowledgment: PENDING.** Next: qualify CP-008 and obtain specific visual feedback; resolve editable Figma access. PR #9/#1 stay draft; no Render deployment or data reset is part of this review.
+
+## Qualified accessibility follow-up — current review set
+
+Exact source **28afb979491956716d08992f001771a7062fdd8b**, [PR #10](https://github.com/sohamsadegaonkar/Return_desk/pull/10), [CI 39895331140](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39895331140): all 19 steps PASS. Job 120224331084 confirms 106 unit/client, 57 HTTP, 23 PostgreSQL invariants, 16 browser project scenarios and 4 offline smoke tests. The new computed dialog-name assertion passed in the approval flow on both desktop and 375px. This is not a full assistive-technology audit.
+
+Artifact **12476094254** archive SHA256 **a9e4f1b8148d74a32590eeb42dd53dd1c65f39afa153b66c480c2340fe9687a2**, verified against provider digest. Root inspected all six refreshed images. Future progress labels and note placeholder are visibly darker; responsive containment, wrapping chips and decision-before-notes remain. Synthetic long names vary across runs; images do not represent real customers. No hosted or owner acceptance is inferred.
+
+| Screen | Desktop | Mobile 375px |
+|---|---|---|
+| Queue | [Open](evidence/28afb979/queue-desktop.png) | [Open](evidence/28afb979/queue-mobile-375.png) |
+| Create | [Open](evidence/28afb979/create-desktop.png) | [Open](evidence/28afb979/create-mobile-375.png) |
+| Detail | [Open](evidence/28afb979/detail-desktop.png) | [Open](evidence/28afb979/detail-mobile-375.png) |
+
+| Current PNG | SHA256 |
+|---|---|
+| create-desktop.png | 31620d3b0654c9d4efdbbe09fe41a7c2f51d474179635f937ced0bb24c000821 |
+| create-mobile-375.png | 5a3ec5192509a3b6a98405bc1a9c03feadca3a13b1e9c912d1338ac852f0610f |
+| detail-desktop.png | e0a5cdec88b683b6e92ce3658c31b91518836370952d2aa3efdf88557cf47e0d |
+| detail-mobile-375.png | a04acc2a8371a88f90da0c07b7f1a31019479c33db059393762b172d794e22a1 |
+| queue-desktop.png | b5c0dbde657a80b74764b46a51c86e4d0f684283d766b318176a7b6f45002349 |
+| queue-mobile-375.png | 3a4ec3a5de914c15cae4af97a6416144277d2aed65b982f974190710990d2302 |
+
+Next: owner feedback on these actual screens and editable Figma destination. Existing visual/design gate remains; PR #10/#9/#1 draft/unmerged, Render unchanged.
