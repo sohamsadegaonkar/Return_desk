@@ -50,3 +50,19 @@ Owner selected **XFactor**. Figma `whoami` confirms workspace key `team::1533080
 - **Six editable Figma frames created** (native auto-layout frames, editable text, shape/field/chip/button layers): desktop/mobile Queue, Create request and Request detail. Generated structural metadata confirmed these screens under the file's design page and node screenshot of Desktop Queue was successfully rendered. The source is genuine vector/text hierarchy, **not a pasted full-page screenshot**.
 - Visual mapping: CP-007 v2 repository CSS token palette and known synthetic-only workflows; source application UI v2 on PR #9, source-verified CI for previous UI commit. The Figma file is a first editable design draft, **not** fully production-synced Code Connect, interactive prototype or accessibility certification. Status/approval actions in Figma are illustrative, not live application controls.
 - **Still needed:** review actual Figma visual frames for exact fidelity, create reusable component variants/variables if desired, capture user design approval. This Figma creation does not grant permission to merge PR #9 or redeploy Render. PR #1 remains draft.
+
+## CP-007 revision B — first Figma design rejected, replacement built (23 October 2026)
+
+**Owner feedback:** The initial XFactor Figma composition was precisely the generic / rusty AI-generated styling the owner had rejected. This explicitly **invalidates the initial six Figma frames as an acceptable visual design**. Do not treat first-frame creation or old screenshot generation as UI approval.
+
+**Corrective design work:** On the existing editable [XFactor Figma file](https://www.figma.com/design/fTxY2wtkJdTUzvo9Qb9J2l), replaced all six rejected top-level frames with a newly composed **Resolution Studio** direction, featuring a dark-forest navigation rail, warm-neutral surfaces, deliberate citron decision affordances, editorial DM Sans headings, IBM Plex Mono operational metadata, scannable case table, selected-case context and action panel, structured form, and decision-first mobile layout.
+
+The six current **native editable** frames were inspected:
+- Queue desktop `7:2` (1440×960), create desktop `8:2`, detail desktop `8:78`
+- Queue mobile `9:2` (390×1120), create mobile `9:63` (390×1365), detail mobile `9:112` (390×1390)
+- All six earlier frame IDs (`1:2`, `1:55`, `1:99`, `1:143`, `1:183`, `1:228`) removed from active canvas after replacements were rendered. Structural verification found exactly six top-level screen frames, with 30–74 editable text layers each; no flattened full-page screenshots.
+- Screenshots of revised desktop Queue/Create/Detail and mobile Queue/Create/Detail were reviewed for hierarchy, clipping and decision priority. This is **integrator visual self-review**, not user approval or formal accessibility certification.
+
+**Important implementation delta:** This new visual language is **NOT yet implemented in Next.js**. PR #9's earlier blue/navy CSS and component treatments correspond to the earlier direction, so do **not** merge PR #9 on the strength of its passing CI. The Figma designs are an interactive-workflow *specification*, not functioning API-connected buttons or a working Figma prototype. The existing public Render demo and DB remain unchanged.
+
+**Gate:** Request owner review of revised [Queue desktop](https://www.figma.com/design/fTxY2wtkJdTUzvo9Qb9J2l?node-id=7-2), [Mobile queue](https://www.figma.com/design/fTxY2wtkJdTUzvo9Qb9J2l?node-id=9-2), and [Mobile detail](https://www.figma.com/design/fTxY2wtkJdTUzvo9Qb9J2l?node-id=9-112). If approved, reconcile source code and design tokens, implement controls against existing APIs, rerun full exact-head CI and real hosted responsive checks before merging/deploying. **Visual approval remains PENDING.**

@@ -25,3 +25,6 @@ Exact candidate CI [39868873522](https://github.com/sohamsadegaonkar/Return_desk
 
 ### Latest UI v2 qualified source checkpoint
 At `28a25ceb479fa19c88b8e7260897a70b85372cfb`, [CI 39870760077](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39870760077) passed 19/19 workflow steps with six screenshot files spanning queue, create and detail at desktop/375px. Manual screenshot review confirmed properly aligned search icon, six visible status chips and decision-before-notes on mobile. **Not yet deployed or user-approved; no editable Figma canvas authored.** PR #9 draft, main release PR #1 draft.
+
+### CP-007 latest — replacement Figma direction B, user approval still pending
+The owner **rejected the original Figma design** as repeating the dated generic UI. The XFactor Figma file has since been rebuilt with six newly composed native-editable Resolution Studio screens; old six frames removed. Integrator inspected revised desktop/mobile renderings. **Current app source in PR #9 has NOT been updated to match this second design direction**, so CI of prior source does not qualify the redesigned visual experience. PR #9 and PR #1 remain draft/unmerged; public Render remains the prior stable application. Next: owner visual verdict then exact code parity/review, tests and deployment.
