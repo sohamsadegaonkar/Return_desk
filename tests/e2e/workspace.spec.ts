@@ -148,3 +148,20 @@ test("a note committed before a500 response is not blindly retried", async ({pag
   const saved = (await (await request.get(`/api/requests/${row.id}`)).json()).data;
   expect(saved.notes.filter((n: {body: string}) => n.body === note)).toHaveLength(1);
 });
+
+
+test("external tracking links cannot break a valid request search", async ({ page, request }) => {
+  const row = await create(request);
+  const nextApiCall = page.waitForRequest((item) =>
+    item.url().includes("/api/requests?") && item.method() === "GET",
+  );
+  await page.goto("/?utm_source=chatgpt.com&q=" + encodeURIComponent(row.reference));
+  const apiRequest = await nextApiCall;
+  const apiUrl = new URL(apiRequest.url());
+  expect(apiUrl.searchParams.get("utm_source")).toBeNull();
+  expect(apiUrl.searchParams.get("q")).toBe(row.reference);
+  await expect(page.getByRole("link", {
+    name: new RegExp("^" + row.reference + "(?:\\s|$)"),
+  })).toBeVisible();
+  await expect(page.getByRole("alert")).toHaveCount(0);
+});

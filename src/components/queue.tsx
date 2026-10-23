@@ -8,9 +8,19 @@ import { api, ApiError, asError } from "@/lib/api";
 import { reasonLabels, shortDate, statusLabels } from "@/lib/display";
 import { ErrorBox, Loading, Status } from "./ui";
 
+/** Never forward unrelated page URLs (e.g. utm_source) to the strict list API. */
+const REQUEST_LIST_QUERY_KEYS = [
+  "q", "status", "reason", "sort", "direction", "page", "pageSize",
+] as const;
+
 export function Queue() {
   const params = useSearchParams();
-  return <QueueState query={params.toString()} />;
+  const apiQuery = new URLSearchParams();
+  for (const key of REQUEST_LIST_QUERY_KEYS) {
+    const value = params.get(key);
+    if (value !== null) apiQuery.set(key, value);
+  }
+  return <QueueState query={apiQuery.toString()} />;
 }
 function QueueState({ query }: { query: string }) {
   const router = useRouter();

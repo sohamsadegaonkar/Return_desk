@@ -8,3 +8,7 @@
 4. **Final release review.** Review CP-006, SECURITY_RELEASE_REVIEW, README, checklist and release PR [#1](https://github.com/sohamsadegaonkar/Return_desk/pull/1). Once remaining gates pass, mark PR ready, merge integration into `main`, confirm exact merged `main` CI, and submit source plus Render links before 11:00 IST. No email is sent without explicit authority.
 
 **No new application features or migrations** are needed. User acknowledgment is PENDING until supplied.
+
+
+## Time-sensitive release hotfix candidate — external tracking link
+An observed public screenshot showed `?utm_source=chatgpt.com` on the Queue URL causing a strict API `VALIDATION_ERROR`: the frontend forwarded **all page search parameters** into `/api/requests`, although the server correctly rejects unrecognized API query keys. Prepared a minimal branch-isolated fix to **allowlist only q, status, reason, sort, direction, page, pageSize** before API requests; add isolated Playwright regression for a tracking-tagged request search. The deployed 83873e9 interface is still old and will not become Service Ledger merely from this bugfix. No schema or payment changes. **CI and live deployment pending**; do not merge until full exact-head verification. Work's unpublished Service Ledger code must be pushed and reviewed separately rather than overwritten by this hotfix.
