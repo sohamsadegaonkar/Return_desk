@@ -26,9 +26,12 @@ export function RequestFields({
     hint?: string,
   ) => (
     <div className={name === "itemName" ? "sm:col-span-2" : ""}>
-      <label className="field-label" htmlFor={name}>
-        {label}
-      </label>
+      <div className="field-label-row">
+        <label className="field-label" htmlFor={name}>{label}</label>
+        {["customerName", "orderReference", "itemIdentifier", "itemName", "quantity"].includes(name) && (
+          <span aria-hidden="true" className="field-required">Required</span>
+        )}
+      </div>
       <input
         id={name}
         name={name}
@@ -36,6 +39,8 @@ export function RequestFields({
         value={draft[name] ?? ""}
         onChange={(e) => onChange({ ...draft, [name]: e.target.value })}
         disabled={disabled}
+        autoComplete="off"
+        required={["customerName", "orderReference", "itemIdentifier", "itemName", "quantity"].includes(name)}
         maxLength={maxLength}
         min={type === "number" ? "1" : undefined}
         step={type === "number" ? "1" : undefined}
@@ -54,12 +59,12 @@ export function RequestFields({
           01 <span>Customer</span>
         </legend>
         <p className="mb-5 text-sm text-slate-500">
-          Provide a name and at least one way to reach the customer.
+          Enter a name and at least one contact method (email or phone).
         </p>
         <div className="form-grid">
           {input("customerName", "Customer name", "text", 120)}
-          {input("customerEmail", "Email address", "email", 255)}
-          {input("customerPhone", "Phone number", "tel", 40)}
+          {input("customerEmail", "Email address", "email", 255, "At least one contact method: email or phone.")}
+          {input("customerPhone", "Phone number", "tel", 40, "Optional if an email address is provided.")}
         </div>
       </fieldset>
       <fieldset
@@ -75,9 +80,10 @@ export function RequestFields({
           {input("itemName", "Item name", "text", 200)}
           {input("quantity", "Quantity", "number")}
           <div>
-            <label className="field-label" htmlFor="reason">
-              Reason for return
-            </label>
+            <div className="field-label-row">
+              <label className="field-label" htmlFor="reason">Reason for return</label>
+              <span aria-hidden="true" className="field-required">Required</span>
+            </div>
             <select
               id="reason"
               className="input"

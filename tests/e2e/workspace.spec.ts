@@ -46,7 +46,7 @@ test("queue searches a real record and fits the viewport", async ({ page, reques
   await noHorizontalOverflow(page);
 });
 
-test("create form persists customer and order details", async ({ page }) => {
+test("create form persists customer and order details", async ({ page }, testInfo) => {
   const token = randomUUID();
   await page.goto("/requests/new");
   await page.getByLabel("Customer name", {exact: true}).fill(`Browser customer ${token}`);
@@ -57,6 +57,7 @@ test("create form persists customer and order details", async ({ page }) => {
   await page.getByLabel("Quantity", {exact: true}).fill("2");
   await page.getByLabel("Reason for return", {exact: true}).selectOption("SIZE_ISSUE");
   await noHorizontalOverflow(page);
+  await page.screenshot({path: `test-results/create-${testInfo.project.name}.png`,fullPage:true});
   await page.getByRole("button", {name: "Create request"}).click();
   await expect(page).toHaveURL(/\/requests\/[0-9a-f-]{36}$/);
   await expect(page.getByText(`FORM-${token}`, {exact: true})).toBeVisible();
@@ -65,11 +66,13 @@ test("create form persists customer and order details", async ({ page }) => {
   await noHorizontalOverflow(page);
 });
 
-test("approval fields clear on resolution changes and only legal actions remain", async ({page, request}) => {
+test("approval fields clear on resolution changes and only legal actions remain", async ({page, request}, testInfo) => {
   const row = await create(request);
   const reviewed = await request.post(`/api/requests/${row.id}/transitions`, {data: {expectedVersion: row.version, toStatus: "IN_REVIEW"}});
   expect(reviewed.status()).toBe(200);
   await page.goto(`/requests/${row.id}`);
+  await expect(page.getByRole("heading",{name:row.reference,exact:true})).toBeVisible();
+  await page.screenshot({path:`test-results/detail-${testInfo.project.name}.png`,fullPage:true});
   await expect(page.getByRole("button", {name: "Start review", exact: true})).toHaveCount(0);
   await page.getByRole("button", {name: "Approve request", exact: true}).click();
   const dialog = page.getByRole("dialog");
@@ -147,4 +150,43 @@ test("a note committed before a500 response is not blindly retried", async ({pag
   expect(submitted).toBe(1);
   const saved = (await (await request.get(`/api/requests/${row.id}`)).json()).data;
   expect(saved.notes.filter((n: {body: string}) => n.body === note)).toHaveLength(1);
+});
+
+test("v2 workspace quick filters, search reset and navigation work responsively", async ({page,request}) => {
+  const row = await create(request);
+  await page.goto("/");
+  await expect(page.getByRole("navigation", {name: "Primary navigation"})).toBeVisible();
+  await expect(page.getByRole("link", {name: "All requests", exact: true})).toHaveAttribute("aria-current","page");
+  await page.getByRole("button", {name: "Rejected", exact: true}).click();
+  await expect(page).toHaveURL(/status=REJECTED/);
+  await page.getByRole("button", {name: "Open", exact: true}).click();
+  await expect(page).toHaveURL(/status=OPEN/);
+  await expect(page.getByRole("button", {name: "Open", exact: true})).toHaveAttribute("aria-pressed","true");
+  await page.getByLabel("Search requests").fill(row.customerName);
+  await expect(page.getByRole("link", {name: new RegExp("^" + row.reference)}).first()).toBeVisible();
+  await page.getByRole("button",{name:"Clear search"}).click();
+  await expect(page.getByLabel("Search requests")).toHaveValue("");
+  await expect(page).not.toHaveURL(/[?&]q=/);
+  await page.getByRole("navigation",{name:"Primary navigation"}).getByRole("link", {name:"New request",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"New return request"})).toBeVisible();
+  await expect(page.getByRole("navigation",{name:"Primary navigation"}).getByRole("link", {name:"New request",exact:true})).toHaveAttribute("aria-current","page");
+  await noHorizontalOverflow(page);
+});
+
+test("v2 progress guidance matches the actual lifecycle state",async ({page,request},testInfo) => {
+  const row=await create(request);
+  await page.goto("/requests/"+row.id);
+  const progress=page.getByRole("group",{name:"Request progress"});
+  await expect(progress.getByText("Open",{exact:true}).locator("..")).toHaveAttribute("aria-current","step");
+  await page.getByRole("button",{name:"Start review",exact:true}).click();
+  await page.getByRole("dialog").getByRole("button",{name:"Start review",exact:true}).click();
+  await expect(progress.getByText("In review",{exact:true}).locator("..")).toHaveAttribute("aria-current","step");
+  if (testInfo.project.name === "mobile-375") {
+    const decision = await page.locator(".decision-panel").boundingBox();
+    const notes = await page.locator(".detail-notes").boundingBox();
+    expect(decision, "Decision panel must be visible").not.toBeNull();
+    expect(notes, "Notes panel must be visible").not.toBeNull();
+    expect(decision!.y + decision!.height, "Decision should precede note entry on mobile").toBeLessThan(notes!.y);
+  }
+  await noHorizontalOverflow(page);
 });

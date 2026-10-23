@@ -12,4 +12,6 @@ CP-002–005 are now documented against exact reviewed integrated source `d01f7e
 | CP-005 | [Workspace/recovery](CP-005-workspace-recovery.md) | Isolated CI PASS; external UI check pending |
 | CP-006 | [Render deployment/submission](CP-006-render-release.md) | PARTIAL / BLOCKED on hosted migration, seed, persistence and smoke |
 
+| CP-007 | [UI/UX redesign v2](CP-007-ui-ux-redesign.md) | CANDIDATE / CI and visual review pending |
+
 User acknowledgment remains PENDING. [Checkpoint template](../templates/CHECKPOINT_TEMPLATE.md).

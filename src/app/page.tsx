@@ -3,7 +3,7 @@ import { Queue } from "@/components/queue";
 import { Loading, Shell } from "@/components/ui";
 export default function Home() {
   return (
-    <Shell>
+    <Shell section="queue">
       <Suspense fallback={<Loading />}>
         <Queue />
       </Suspense>

@@ -90,32 +90,49 @@ function QueueState({ query }: { query: string }) {
     <>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">THE RETURNS DESK</p>
-          <h1>Every return, a clear next step.</h1>
+          <p className="eyebrow">RETURNS / ALL REQUESTS</p>
+          <h1>Return requests</h1>
           <p className="page-description">
-            Keep the details close. Move each request forward with confidence.
+            Find a request, review the details and move it to the next step.
           </p>
         </div>
         <Link href="/requests/new" className="button primary">
           <span aria-hidden="true">＋</span> New request
         </Link>
       </div>
+      <nav className="queue-quick-filters" aria-label="Quick status filters">
+        {[
+          { value: "", label: "All requests" },
+          { value: "OPEN", label: "Open" },
+          { value: "IN_REVIEW", label: "In review" },
+          { value: "APPROVED", label: "Approved" },
+          { value: "REJECTED", label: "Rejected" },
+          { value: "COMPLETED", label: "Completed" },
+        ].map(({ value, label }) => (
+          <button key={label} type="button"
+            className={"quick-filter " + ((params.get("status") || "") === value ? "quick-filter-active" : "")}
+            aria-pressed={(params.get("status") || "") === value}
+            onClick={() => change({ status: value })}>
+            {label}
+          </button>
+        ))}
+      </nav>
       <section className="queue-panel" aria-labelledby="queue-title">
         <div className="panel-title">
           <div className="flex flex-wrap items-center gap-3">
-            <h2 id="queue-title">Request queue</h2>
+            <h2 id="queue-title">Your request queue</h2>
             {!pending && !error && (
               <span className="count-badge">{pagination.total}</span>
             )}
           </div>
           <span className="hidden text-xs text-slate-400 sm:block">
-            A little care goes a long way
+            Select a request to view details and next actions
           </span>
         </div>
         <div className="queue-filters">
           <div className="search-wrap">
-            <span aria-hidden="true">⌕</span>
-            <label htmlFor="search" className="sr-only">
+            <svg aria-hidden="true" className="search-glyph" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg>
+            <label htmlFor="search" className="filter-label">
               Search requests
             </label>
             <input
@@ -126,9 +143,20 @@ function QueueState({ query }: { query: string }) {
               autoComplete="off"
               className="input search-input"
             />
+            {search && (
+              <button type="button" className="search-clear"
+                aria-label="Clear search"
+                onClick={() => {
+                  setSearch("");
+                  const next = new URLSearchParams(query);
+                  next.delete("q");
+                  next.delete("page");
+                  router.replace(next.size ? "/?" + next.toString() : "/", { scroll: false });
+                }}>×</button>
+            )}
           </div>
           <div>
-            <label className="sr-only" htmlFor="status-filter">
+            <label className="filter-label" htmlFor="status-filter">
               Status
             </label>
             <select
@@ -146,7 +174,7 @@ function QueueState({ query }: { query: string }) {
             </select>
           </div>
           <div>
-            <label className="sr-only" htmlFor="reason-filter">
+            <label className="filter-label" htmlFor="reason-filter">
               Return reason
             </label>
             <select
@@ -164,7 +192,7 @@ function QueueState({ query }: { query: string }) {
             </select>
           </div>
           <div>
-            <label className="sr-only" htmlFor="sort">
+            <label className="filter-label" htmlFor="sort">
               Sort requests
             </label>
             <select
@@ -187,8 +215,8 @@ function QueueState({ query }: { query: string }) {
           </div>
         </div>
         {filtered && (
-          <div className="filter-summary">
-            <span>Showing matching requests</span>
+          <div className="filter-summary" aria-live="polite">
+            <span>Filters applied · {pending ? "Searching…" : pagination.total + " matching requests"}</span>
             <button onClick={() => router.replace("/")} className="text-button">
               Clear filters
             </button>
@@ -252,7 +280,7 @@ function QueueState({ query }: { query: string }) {
                       <th scope="col">Status</th>
                       <th scope="col">Created</th>
                       <th scope="col">
-                        <span className="sr-only">Open</span>
+                        <span className="sr-only">Open details</span>
                       </th>
                     </tr>
                   </thead>
@@ -293,7 +321,7 @@ function QueueState({ query }: { query: string }) {
                             className="row-link"
                             aria-label={`Open ${row.reference}`}
                           >
-                            ↗
+                            <span className="row-open-label">View <span aria-hidden="true">→</span></span>
                           </Link>
                         </td>
                       </tr>
@@ -369,8 +397,7 @@ function QueueState({ query }: { query: string }) {
         )}
       </section>
       <p className="queue-footnote">
-        A resolution records the agreement with your customer. Payments and
-        fulfilment happen outside ReturnDesk.
+        Approval records an agreed resolution. Payments and fulfilment happen outside ReturnDesk.
       </p>
     </>
   );

@@ -342,6 +342,22 @@ export function RequestWorkspace({ id }: { id: string }) {
           )}
         </div>
       </div>
+      <div className="progress-strip" role="group" aria-label="Request progress">
+        {(request.status === "REJECTED"
+          ? (["OPEN", "IN_REVIEW", "REJECTED"] as const)
+          : (["OPEN", "IN_REVIEW", "APPROVED", "COMPLETED"] as const)
+        ).map((step, index, steps) => {
+          const current = [...steps].map(String).indexOf(request.status);
+          return (
+            <div key={step}
+              className={"progress-step " + (index < current ? "progress-step-done " : "") + (index === current ? "progress-step-active" : "")}
+              aria-current={index === current ? "step" : undefined}>
+              <span className="progress-number" aria-hidden="true">{index < current ? "✓" : index + 1}</span>
+              <span>{step === "IN_REVIEW" ? "In review" : step === "OPEN" ? "Open" : step === "APPROVED" ? "Approved" : step === "REJECTED" ? "Rejected" : "Completed"}</span>
+            </div>
+          );
+        })}
+      </div>
       {notice && (
         <div role="status" className="success-box">
           ✓ {notice}
@@ -451,65 +467,6 @@ export function RequestWorkspace({ id }: { id: string }) {
               </p>
             )}
           </section>
-          <section
-            className="surface detail-surface"
-            aria-labelledby="notes-title"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <h2 id="notes-title" className="text-lg font-semibold">
-                Notes & context
-              </h2>
-              <span className="count-badge">{request.notes.length}</span>
-            </div>
-            <p className="mt-2 text-sm text-slate-500">
-              A lasting record of the conversation. Notes can’t be edited or
-              removed.
-            </p>
-            <div className="notes-list">
-              {request.notes.length ? (
-                request.notes.map((n) => (
-                  <article className="note" key={n.id}>
-                    <div className="note-dot" aria-hidden="true" />
-                    <time dateTime={n.createdAt}>{fullDate(n.createdAt)}</time>
-                    <p>{n.body}</p>
-                  </article>
-                ))
-              ) : (
-                <p className="my-7 text-sm text-slate-400">
-                  No notes yet. Add the context that helps the next person.
-                </p>
-              )}
-            </div>
-            {cap.canAddNote && (
-              <form onSubmit={addNote} className="note-form">
-                <label className="field-label" htmlFor="note-body">
-                  Add a note
-                </label>
-                <textarea
-                  id="note-body"
-                  className="input min-h-28 resize-y"
-                  maxLength={4000}
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  placeholder="What should the next person know?"
-                  disabled={noteBusy || uncertain}
-                />
-                <FieldError errors={noteError?.fieldErrors || {}} name="body" />
-                <ErrorBox error={noteError} />
-                <div className="mt-3 flex items-center justify-between gap-3">
-                  <span className="text-xs text-slate-400">
-                    {note.length} / 4,000
-                  </span>
-                  <button
-                    className="button secondary"
-                    disabled={noteBusy || uncertain || !note.trim()}
-                  >
-                    {noteBusy ? "Adding note…" : "Add note"}
-                  </button>
-                </div>
-              </form>
-            )}
-          </section>
         </div>
         <aside className="space-y-5">
           <section className="decision-panel" aria-labelledby="next-title">
@@ -519,12 +476,12 @@ export function RequestWorkspace({ id }: { id: string }) {
               className="mt-3 text-2xl font-semibold tracking-tight"
             >
               {request.status === "OPEN"
-                ? "Ready for a closer look."
+                ? "Review this return"
                 : request.status === "IN_REVIEW"
-                  ? "Make the decision clear."
+                  ? "Choose a resolution"
                   : request.status === "APPROVED"
-                    ? "Carry the promise through."
-                    : "The decision is recorded."}
+                    ? "Finish the return"
+                    : "Decision recorded"}
             </h2>
             <p className="mt-3 text-sm leading-7 text-slate-600">
               {request.status === "OPEN"
@@ -597,6 +554,65 @@ export function RequestWorkspace({ id }: { id: string }) {
             Last updated {fullDate(request.updatedAt)}
           </div>
         </aside>
+        <section
+          className="surface detail-surface detail-notes"
+          aria-labelledby="notes-title"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="notes-title" className="text-lg font-semibold">
+              Notes & context
+            </h2>
+            <span className="count-badge">{request.notes.length}</span>
+          </div>
+          <p className="mt-2 text-sm text-slate-500">
+            A lasting record of the conversation. Notes can’t be edited or
+            removed.
+          </p>
+          <div className="notes-list">
+            {request.notes.length ? (
+              request.notes.map((n) => (
+                <article className="note" key={n.id}>
+                  <div className="note-dot" aria-hidden="true" />
+                  <time dateTime={n.createdAt}>{fullDate(n.createdAt)}</time>
+                  <p>{n.body}</p>
+                </article>
+              ))
+            ) : (
+              <p className="my-7 text-sm text-slate-400">
+                No notes yet. Add the context that helps the next person.
+              </p>
+            )}
+          </div>
+          {cap.canAddNote && (
+            <form onSubmit={addNote} className="note-form">
+              <label className="field-label" htmlFor="note-body">
+                Add a note
+              </label>
+              <textarea
+                id="note-body"
+                className="input min-h-28 resize-y"
+                maxLength={4000}
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="What should the next person know?"
+                disabled={noteBusy || uncertain}
+              />
+              <FieldError errors={noteError?.fieldErrors || {}} name="body" />
+              <ErrorBox error={noteError} />
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <span className="text-xs text-slate-400">
+                  {note.length} / 4,000
+                </span>
+                <button
+                  className="button secondary"
+                  disabled={noteBusy || uncertain || !note.trim()}
+                >
+                  {noteBusy ? "Adding note…" : "Add note"}
+                </button>
+              </div>
+            </form>
+          )}
+        </section>
       </div>
       <dialog
         ref={dialog}

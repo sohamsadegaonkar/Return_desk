@@ -16,3 +16,18 @@
 - CP-006 human acceptance, review of the final merge candidate, PR #1 merge to main, successful main CI and required submission are **PENDING**. No submission email has been sent.
 
 **Verdict:** Backend API, hosted database/write workflow and persistence across deployment **PASS**. Final public browser, security/ops, metadata/hours and release merge **PENDING**. See [release checklist](RELEASE_CHECKLIST.md), [CP-006](checkpoints/CP-006-render-release.md), [next step](NEXT_STEP.md).
+
+## New user-requested UI redesign (UNMERGED CANDIDATE)
+After the user rejected the old generic interface, the next design candidate adds adaptive navigation, URL-backed quick filters and search reset, clearer form labels and status progress, and a coordinated visual-token layer. API/database unchanged. **Source CI passed but the candidate is not deployed, authored in Figma, or approved by user.** The existing Render service remains the last accepted API deployment. See [CP-007](checkpoints/CP-007-ui-ux-redesign.md) and [UI design handoff](design/UX_REDESIGN_V2.md). Existing release gates remain open.
+
+### CP-007 tested candidate update
+Exact candidate CI [39868873522](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39868873522) **PASS** on bf1aa8d (19/19 workflow steps, 16 browser-project scenarios), following correction of the first browser failure. Desktop 1440 and mobile 375 screenshots were generated and integrator-inspected. **User design approval and Figma file are still pending**; PR #9 remains draft, and current Render continues to show the old UI.
+
+### Latest UI v2 qualified source checkpoint
+At `28a25ceb479fa19c88b8e7260897a70b85372cfb`, [CI 39870760077](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39870760077) passed 19/19 workflow steps with six screenshot files spanning queue, create and detail at desktop/375px. Manual screenshot review confirmed properly aligned search icon, six visible status chips and decision-before-notes on mobile. **Not yet deployed or user-approved; no editable Figma canvas authored.** PR #9 draft, main release PR #1 draft.
+
+### CP-007 latest — replacement Figma direction B, user approval still pending
+The owner **rejected the original Figma design** as repeating the dated generic UI. The XFactor Figma file has since been rebuilt with six newly composed native-editable Resolution Studio screens; old six frames removed. Integrator inspected revised desktop/mobile renderings. **Current app source in PR #9 has NOT been updated to match this second design direction**, so CI of prior source does not qualify the redesigned visual experience. PR #9 and PR #1 remain draft/unmerged; public Render remains the prior stable application. Next: owner visual verdict then exact code parity/review, tests and deployment.
+
+### CP-007 candidate update — interactive Service Ledger, **not yet in code**
+Owner rejected both prior template directions. Current XFactor [Figma interactive proposal](https://www.figma.com/design/fTxY2wtkJdTUzvo9Qb9J2l?node-id=14-2) is a new top-navigation, single-surface returns workspace. It contains inline case expansion, focused mobile decision, confirmation states, sample search, six accurate extra desktop-case destinations and four mobile counterparts. Prototype graph: **106 links with no missing destinations**, and the complete create fields were repaired after screenshot QA. **Not signed off by owner and not implemented in PR #9 source.** UI PR #9 and release PR #1 remain draft; Render unchanged.

@@ -13,7 +13,7 @@ export default function RequestPage({
   params: Promise<{ id: string }>;
 }) {
   return (
-    <Shell>
+    <Shell section="detail">
       <Suspense fallback={<Loading label="Opening request…" />}>
         <RequestContent params={params} />
       </Suspense>

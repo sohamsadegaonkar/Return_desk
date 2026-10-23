@@ -54,10 +54,10 @@ export function NewRequest() {
       </Link>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">START WITH THE DETAILS</p>
+          <p className="eyebrow">RETURNS / NEW REQUEST</p>
           <h1>New return request</h1>
           <p className="page-description">
-            A complete record makes the next conversation easier.
+            Enter customer and item details. Review your information before you create the request.
           </p>
         </div>
         <span className="status status-open">
@@ -118,10 +118,9 @@ export function NewRequest() {
           <span className="helper-icon" aria-hidden="true">
             ↩
           </span>
-          <h2>A clear beginning.</h2>
+          <h2>What happens next?</h2>
           <p>
-            We’ll assign a reference automatically, so you can find this request
-            again.
+            We’ll create a reference number automatically and open the request details once it is saved.
           </p>
           <div className="helper-divider" />
           <h3>One item, one live request</h3>
@@ -129,10 +128,9 @@ export function NewRequest() {
             An order and item can have one Open, In review, or Approved request
             at a time.
           </p>
-          <h3 className="mt-5">Details stay editable during review</h3>
+          <h3 className="mt-5">You can correct details during review</h3>
           <p>
-            After approval or rejection, the details are locked. You can keep
-            adding notes.
+            Once the request is approved or rejected, its details are locked. You can still add notes.
           </p>
         </aside>
       </div>
