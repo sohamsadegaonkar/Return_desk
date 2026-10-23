@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RESOLUTIONS } from "@/domain/requests/types";
 import type { RequestStatus, Resolution } from "@/domain/requests/types";
@@ -36,6 +36,7 @@ export function RequestWorkspace({ id }: { id: string }) {
   const [resolution, setResolution] = useState<Resolution>("REFUND");
   const [refundAmount, setRefundAmount] = useState("");
   const dialog = useRef<HTMLDialogElement>(null);
+  const dialogTitleId = useId();
   const lastTrigger = useRef<HTMLElement | null>(null);
   const router = useRouter();
   const readSequence = useRef(0);
@@ -616,6 +617,7 @@ export function RequestWorkspace({ id }: { id: string }) {
       </div>
       <dialog
         ref={dialog}
+        aria-labelledby={dialogTitleId}
         className={`action-dialog ${action === "edit" ? "wide-dialog" : ""}`}
         onCancel={(e) => {
           if (busy) e.preventDefault();
@@ -632,7 +634,7 @@ export function RequestWorkspace({ id }: { id: string }) {
           <div className="dialog-heading">
             <div>
               <p className="eyebrow">{request.reference}</p>
-              <h2>{action ? actionTitles[action] : "Request action"}</h2>
+              <h2 id={dialogTitleId}>{action ? actionTitles[action] : "Request action"}</h2>
             </div>
             <button
               type="button"

@@ -1,6 +1,9 @@
 # Requirement traceability
 
-As of 23 October 2026, **isolated CI passed** on exact integration commit `56fa9cf` ([run 39844358279](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279)): 106 unit/client tests, 23 PostgreSQL16 assertions, 57 HTTP cases, 12 desktop/375px browser scenarios. **External Render-backed data flows and app-restart persistence remain unverified.** IDs below are requirement tracing references. IDs below are stable test/review references.
+As of 23 October 2026, **isolated UI-candidate CI passed** on exact source `455accfbd2385d315dc567d87aa0d16954056fae` ([run 39888722084](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39888722084)): 106 unit/client tests, 23 PostgreSQL 16 assertions, 57 HTTP cases and 16 desktop/375px browser project scenarios (8 scenarios × 2 projects).
+
+Separately, [CP-006](checkpoints/CP-006-render-release.md) records hosted migration/seed, public API read/write workflows and persistence **across a completed Render deployment** on `83873e98d87ad432d91b26877a346fd73bbe1b1d` as PASS. A physical host restart has not been independently verified. The UI v2 candidate is not deployed; final hosted desktop/375px browser acceptance and submission gates remain pending. IDs below are stable test/review references, not a claim that every acceptance gate is complete.
+
 | ID | Requirement | Verification target |
 |---|---|---|
 | STACK-01 | App Router + React, Node backend, PostgreSQL, Tailwind | Dependency/build/runtime review |
@@ -18,7 +21,7 @@ As of 23 October 2026, **isolated CI passed** on exact integration commit `56fa9
 | RULE-05 | Soft removal only Open/Rejected; no later fetch | Visibility and DB retention |
 | NOTE-01 | All notes chronological and append-only | Tie ordering and SQL mutation refusal |
 | API-01 | Honest status codes and consistent JSON failures | Malformed input, missing, invalid, conflict |
-| SEED-01 | At least 30 across all statuses/reasons, some notes | Plan: exactly 36 visible rows |
+| SEED-01 | At least 30 across all statuses/reasons, some notes | Clean seed creates 36 visible synthetic requests; later smoke writes change the count |
 | SUB-01 | Public deployed app and public GitHub, no ZIP | Clean external smoke check |
 | SUB-02 | README setup, env example, migrations/seed, assumptions, actual hours | Clean-machine rehearsal |
 | SUB-03 | Genuine incremental commits and explainable own work | History and walkthrough |
