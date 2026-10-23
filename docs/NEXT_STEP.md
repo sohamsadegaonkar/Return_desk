@@ -1,23 +1,14 @@
-# Next working step: CP-001 Foundation
+# Next working step — final hosted UI, security and submission
 
-## Relationship to previous work
-CP-000 supplies a reviewed architecture, requirement map, test expectations and research/review protocol. It does NOT supply executable software. Use those contracts to build the minimum runnable foundation.
+**Verified predecessor:** `83873e98d87ad432d91b26877a346fd73bbe1b1d`, [CI 39862332316](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316) success; Render `dep-dbd8k9brjlhs73ccuuc0` exact SHA Live; manual public read/write smoke passed. **After Live redeployment**, owner re-ran `npm run test:live:verify`: saved Completed request HTTP 200, removed request HTTP 404, verdict PASS. Do not rerun live writes or seed. Submission deadline: **23 October 2026 11:00 IST**.
 
-## Entry gate
-Read CP-000: documentation candidate e58e55f6c939a21d721a405e6fcf94372b20a19c was reviewed and remotely verified; use the current receipt commit as the final predecessor. Record its exact enclosing commit as predecessor. Explicit user acknowledgment remains separately tracked; do not claim it occurred.
-Check available Node/package-manager/PostgreSQL versions and remaining assignment deadline from actual evidence.
+1. **Hosted visual acceptance.** Manually open https://returndesk-submission-demo.onrender.com in browser, inspect at **375 CSS px** and desktop widths. Verify queue loads and search/filter controls, opening detail, legal action labels, notes, responsive form and keyboard, errors and lack of horizontal clipping. Record real observed results and screenshot evidence if possible; CI's 12 Playwright scenarios were isolated, not hosted-URL screenshots.
+2. **Security and operations.** Check data is synthetic, inspect repository/history for leaked values, inspect current dependency advisories and document disposition. Remove temporary external client IP allowlist in Render PostgreSQL now that DB CLI work is finished. Never share URLs with credentials or use real support contacts in this unauthenticated demo.
+3. **Submission metadata.** Set GitHub repository description and homepage (null at last API read). Obtain the author's **actual development hours** (not known, cannot fabricate), verify links and document the decision/acceptance.
+4. **Final release review.** Review CP-006, SECURITY_RELEASE_REVIEW, README, checklist and release PR [#1](https://github.com/sohamsadegaonkar/Return_desk/pull/1). Once remaining gates pass, mark PR ready, merge integration into `main`, confirm exact merged `main` CI, and submit source plus Render links before 11:00 IST. No email is sent without explicit authority.
 
-## Fresh research before implementation
-Recheck current Next.js App Router installation/Node runtime and caching guidance, Drizzle generated columns/migrations/transaction support, PostgreSQL 16 generated columns and locking, and the deployment driver's interactive transaction support. Inspect a relevant primary paper from RESEARCH_LOG and search for newer relevant evidence. Record inspected sections, versions, chosen approach and rejected alternatives. Existing downloaded skills alone do not satisfy this gate.
+**No new application features or migrations** are needed. User acknowledgment is PENDING until supplied.
 
-## Work
-1. Scaffold from create-next-app with TypeScript, App Router and Tailwind, preserving existing docs and Git history.
-2. Pin actual dependencies and commit the lockfile. Establish server-only DB access.
-3. Add local PostgreSQL setup, environment example and committed initial migration aligned with architecture.md.
-4. Add initial independent database/contract checks and safe isolated test configuration.
-5. Prove fresh migration, a minimal build and PostgreSQL connectivity. Prepare an early deployment if credentials are available; otherwise document the exact blocker and continue authorized local work.
-6. Build the seed during foundation/API work so UI development has data; do not postpone it to the final hour.
 
-## Exit evidence
-Actual commands and results for install/build, empty-database migration and relevant constraints; no secrets; review of exact diff; updated CP-001, STATUS, NEXT_STEP and research log. Do not invent scripts before package.json exists.
-Next after success: CP-002 uses the verified schema/connection/contracts to implement create and combined list queries. No app runtime gate may be marked successful from source inspection alone.
+## Time-sensitive release hotfix candidate — external tracking link
+An observed public screenshot showed `?utm_source=chatgpt.com` on the Queue URL causing a strict API `VALIDATION_ERROR`: the frontend forwarded **all page search parameters** into `/api/requests`, although the server correctly rejects unrecognized API query keys. Prepared a minimal branch-isolated fix to **allowlist only q, status, reason, sort, direction, page, pageSize** before API requests; add isolated Playwright regression for a tracking-tagged request search. The deployed 83873e9 interface is still old and will not become Service Ledger merely from this bugfix. No schema or payment changes. **CI and live deployment pending**; do not merge until full exact-head verification. Work's unpublished Service Ledger code must be pushed and reviewed separately rather than overwritten by this hotfix.

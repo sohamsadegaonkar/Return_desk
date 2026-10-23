@@ -12,3 +12,5 @@ Read in this order:
 
 The assignment PDF controls mandatory scope. architecture.md is the technical baseline. AGENTS.md and WORKFLOW.md control execution. Focused contracts summarize the architecture and must be updated together when a decision changes.
 This pack is preparation, not implementation evidence. No CI enforcement or branch protection has been configured merely by writing these files.
+
+Parallel execution: [team ownership and deadline](TEAM_PLAN.md).

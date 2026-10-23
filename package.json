@@ -1,0 +1,50 @@
+{
+  "name": "returndesk",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "db:migrate": "node --import tsx scripts/migrate.ts",
+    "db:seed": "node --import tsx scripts/seed.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:api": "vitest run --config tests/integration/vitest.config.ts",
+    "db:check": "node --import tsx scripts/check-db.ts",
+    "test:smoke-harness": "node --test tests/smoke/public-smoke.test.mjs",
+    "test:live:run": "node scripts/public-smoke.mjs run",
+    "test:live:verify": "node scripts/public-smoke.mjs verify"
+  },
+  "dependencies": {
+    "dotenv": "18.0.8",
+    "drizzle-orm": "0.45.4",
+    "next": "16.4.2",
+    "pg": "8.23.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "drizzle-kit": "0.31.11",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.2",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "5.0.5"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

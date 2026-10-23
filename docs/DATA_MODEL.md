@@ -1,6 +1,6 @@
 # Database and migration plan
 
-Canonical SQL blueprint: architecture.md section 5; it is not yet an executed migration.
+Canonical SQL blueprint: architecture.md section 5; committed SQL/Drizzle schema and clean-only seed are implemented. Fresh isolated PostgreSQL 16 migrations twice, 36-request/six-note seed plus second-seed refusal, and **23 invariant assertions** all passed on exact integration head `56fa9cf`; the 57-case HTTP and 12-case browser suites also passed ([CI](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279)). **Render-hosted migrations, seed and restart persistence remain NOT VERIFIED.**
 PostgreSQL 16 target; Drizzle schema must match committed migration including generated columns, indexes and triggers.
 Tables: return_requests and request_notes. request_events is optional after all required gates.
 

@@ -1,6 +1,6 @@
 # API contract summary
 
-Canonical details: [architecture](architecture.md), sections 4, 6 and 9. Planned, not implemented.
+Canonical details: [architecture](architecture.md), sections 4, 6 and 9. Route Handlers and transactional service implemented. The earlier PostgreSQL status-enum parameter defect was corrected; all **57 isolated real-HTTP tests passed** on the exact `56fa9cf` integration head ([CI](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39844358279)). **Updated 23 October:** Public hosted synthetic read/write workflow and post-Live deployment saved-record check PASSED. [CI 39862332316](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316) succeeded on `83873e9`. See CP-006 for scope; live 375px browser remains pending.
 | Route | Success |
 |---|---|
 | GET /api/requests | 200 data array + pagination |

@@ -1,22 +1,18 @@
-# Current status
+# ReturnDesk release status — 23 October 2026 (Asia/Kolkata)
 
-Date: 2026-10-22 (Asia/Kolkata).
-Phase: Pre-development documentation.
-Baseline before this pack: aae6763576d0f277300ac0abca5643e711e855b0.
-Current checkpoint: CP-000 documentation reviewed and published; see [record](checkpoints/CP-000-predevelopment.md).
-Implementation: NOT STARTED. Database/migrations: NOT RUN. Application tests: NOT RUN. Deployment: NOT CREATED. CI/branch protection: NOT CONFIGURED.
-User authorization: create and add the pre-development Markdown pack, with review-before-push and research-backed continuation.
-User acknowledgment of this pack: PENDING.
+**Deadline:** 11:00 AM IST, 23 October 2026. **Verified integration head:** `83873e98d87ad432d91b26877a346fd73bbe1b1d`. **PR #1 integration → main:** still DRAFT/UNMERGED. **User release acknowledgment:** PENDING.
 
-## Progress
-| Checkpoint | Scope | Technical state | User acknowledgment |
-|---|---|---|---|
-| CP-000 | Research and documentation pack | Reviewed; published e58e55f; remote verified | Pending |
-| CP-001 | Foundation | Not started | Not applicable |
-| CP-002 | Create and find | Not started | Not applicable |
-| CP-003 | Lifecycle | Not started | Not applicable |
-| CP-004 | Edits, notes, removal | Not started | Not applicable |
-| CP-005 | Responsive workspace and recovery | Not started | Not applicable |
-| CP-006 | Release rehearsal and submission readiness | Not started | Not applicable |
+## Passed — provider, CI and actual hosted demo evidence
+- [CI 39862332316](https://github.com/sohamsadegaonkar/Return_desk/actions/runs/39862332316) **SUCCESS** on `83873e98d87ad432d91b26877a346fd73bbe1b1d`: lint, typecheck, production build, 106 unit/client tests, 57 isolated real-HTTP tests, 23 PostgreSQL invariant checks, 12 desktop/375px Playwright tests, and offline public smoke harness. CI used disposable PostgreSQL, **not hosted Render**.
+- Hosted Render web deployment `dep-dbd8k9brjlhs73ccuuc0` of exactly `83873e98d87ad432d91b26877a346fd73bbe1b1d` confirmed **LIVE** at 03:43:43 IST, 23 October. https://returndesk-submission-demo.onrender.com
+- Hosted PostgreSQL migration and clean synthetic seed completed in Codespaces. Public GET list initially showed **HTTP 200, 36 visible / 36 returned**; fixed synthetic detail **HTTP 200, one note**.
+- Public manual write harness `RETURNDESK_LIVE_TEST=YES npm run test:live:run` reported **LIVE WORKFLOW SMOKE PASSED**: synthetic create/read/edit, legal status chain, stored refund decision (no payment executed), blocked terminal edit, append/read note, search/status filter, soft removal and hidden 404. One added Completed request remains visible; no seeded record was mutated.
+- The user ran `npm run test:live:verify` **again after the confirmed new deployment was Live**, reporting completed record HTTP 200 and removed record HTTP 404, ending **POST-RESTART READ VERIFICATION PASSED**. This is evidence of *persistence across Render deployment*; it does not independently verify the physical host actually restarted.
 
-Next: [CP-001 foundation](NEXT_STEP.md). Actual coding time is not yet recorded; do not invent elapsed hours or a deadline.
+## Outstanding release gates
+- Real **live public-browser acceptance at desktop and 375px**, including queue/workspace, note, action visibility, menu/overflow, focus/keyboard and error presentation. Isolated Playwright CI results do not prove this production-URL check.
+- Full historical secret scan and dependency/advisory review, and removal of any temporary Render PostgreSQL external-client IP access. Public routes are intentionally unauthenticated; use **synthetic demonstration data only**.
+- Repository description and homepage are unset. Author's actual development hours are **NOT SUPPLIED**; no hours invented.
+- CP-006 human acceptance, review of the final merge candidate, PR #1 merge to main, successful main CI and required submission are **PENDING**. No submission email has been sent.
+
+**Verdict:** Backend API, hosted database/write workflow and persistence across deployment **PASS**. Final public browser, security/ops, metadata/hours and release merge **PENDING**. See [release checklist](RELEASE_CHECKLIST.md), [CP-006](checkpoints/CP-006-render-release.md), [next step](NEXT_STEP.md).
